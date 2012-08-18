@@ -7,7 +7,7 @@ from django.contrib.auth.models import User
 from django.http import HttpResponse
 from django.contrib.auth.forms import UserCreationForm
 
-from djangodash.forms import LoginForm
+from djangodash.forms import *
 from djangodash.models import *
 
 def render(template, data, request):
@@ -22,13 +22,28 @@ def home(request):
 	"""
 	user = request.user
 
+	if request.method == "POST":
+		if not user.is_authenticated():
+			return redirect(reverse("home"))
+
+		form = ThreadForm(request.POST)
+		if form.is_valid():
+			# Create a new thread
+			thread_content = form.cleaned_data["content"]
+			new_thread = Thread(content=thread_content,
+							    creator=user)
+			new_thread.save()
+	else:
+		form = ThreadForm()
+
 	# Get all threads
 	threads = Thread.objects.all()
 
 	return render("home.html", 
 			{"user":user,
 			 "is_logged_in":user.is_authenticated(),
-			 "threads":threads}, 
+			 "threads":threads,
+			 "form":form}, 
 			request)
 
 def login(request):

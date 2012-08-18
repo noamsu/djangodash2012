@@ -13,6 +13,10 @@ class ThreadForm(forms.Form):
 	"""
 	Form for adding a new thread.
 	"""
+	WIDTH = 50
+	HEIGHT = 3
+
 	content = forms.CharField(label='New Thread', 
-                              widget=forms.Textarea(),
+                              widget=forms.Textarea(attrs={'cols': WIDTH,
+                                     					   'rows': HEIGHT}),
                               required=True)
