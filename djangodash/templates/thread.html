@@ -1,3 +1,4 @@
+{% load custom_tags %}
 Thread page for: {{thread.content}}
 <br />
 <br />
@@ -5,10 +6,10 @@ Thread page for: {{thread.content}}
 	{% csrf_token %}
 	Write a comment
 	<div><textarea name="content" rows="3" cols="50"></textarea></div>
-	<input type="hidden" name="thread_id" value="{{thread.pk}}" />
+	<input type="hidden" na	me="thread_id" value="{{thread.pk}}" />
 	<input class="comment-input" type='submit' value="Create new comment" />
 </form>
 
 {% for comment in structure %}
-	{{comment}}
+	{{comment|format_threaded_comments}}
 {% endfor %}
