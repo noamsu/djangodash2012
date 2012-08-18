@@ -13,7 +13,16 @@ class Comment(models.Model):
 	votes = models.PositiveIntegerField(default=0)
 
 	def get_children(self):
+		"""
+		Return the immediate children of the current comment.
+		"""
 		return self.comment_set.filter(parent=self)
+
+	def get_tree(self, c):
+		"""
+		Recursively generate a threaded comment tree.
+		"""
+		return [c, [self.get_tree(x) for x in c.get_children()]]
 
 	def __unicode__(self):
 		return u"(%s, %s)" % (self.pk, self.content)
