@@ -2,6 +2,7 @@ from django.shortcuts import render as render_to_response, redirect
 from django.contrib.auth import authenticate
 from django.contrib.auth import login as auth_login
 from django.contrib.auth import logout as auth_logout
+from django.contrib.auth.decorators import login_required
 from django.core.urlresolvers import reverse
 from django.contrib.auth.models import User
 from django.http import HttpResponse
@@ -49,7 +50,11 @@ def home(request):
 			request)
 
 def user_profile(request, username):
+	"""
+	Show the profile page for a user.
+	"""
 	user = request.user
+
 	return render("profile.html", {
 		"user":user
 		}, request)
