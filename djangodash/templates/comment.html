@@ -16,7 +16,7 @@
         <span class="comment-info">{{comment.pk}} says:</span>
         <li>{{comment.content}}</li>
         <span class="reply-link">reply</span>
-        <form style='' id="{{comment.pk}}" action="/add_comment" method="POST">
+        <form style='display:none;' id="{{comment.pk}}" action="/add_comment" method="POST">
         {% csrf_token %}
         <div><textarea name="content" rows="3" cols="50"></textarea></div>
         <input type="hidden" name="comment_id" value="{{comment.pk}}" />
