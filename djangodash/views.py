@@ -61,8 +61,11 @@ def thread(request, thread_id):
 	except Thread.DoesNotExist:
 		raise Http404()
 
+	comments = Comment.objects.filter(thread=thread)
+
 	return render("thread.html",
-		{"thread":thread},
+		{"thread":thread,
+		 "comments":comments},
 		request)
 
 # make this require a POST request

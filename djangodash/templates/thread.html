@@ -8,3 +8,7 @@ Thread page for: {{thread.content}}
 	<input type="hidden" name="thread_id" value="{{thread.pk}}" />
 	<input class="comment-input" type='submit' value="Create new comment" />
 </form>
+
+{% for comment in comments %}
+	{{comment}}
+{% endfor %}
