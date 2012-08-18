@@ -21,6 +21,10 @@ urlpatterns = patterns('',
     # Profile page
 	url(r'^user/(?P<username>.*)$', 'djangodash.views.user_profile', name='user'),
 
+
+	# Ajax urls
+    url(r'^ajax/vote', 'djangodash.views.vote', name="vote"),
+
     # url(r'^djangodash/', include('djangodash.foo.urls')),
 
     # Uncomment the admin/doc line below to enable admin documentation:
@@ -31,4 +35,5 @@ urlpatterns = patterns('',
 
     # Serve static files
     (r'^media/(?P<path>.*)$', 'django.views.static.serve', {'document_root': settings.MEDIA_ROOT}),
+
 )

@@ -12,6 +12,8 @@ from django.views.decorators.csrf import csrf_exempt
 from djangodash.forms import *
 from djangodash.models import *
 
+import json
+
 def render(template, data, request):
 	"""
 	Wrapper for rendering a response.
@@ -100,7 +102,15 @@ def add_comment(request):
 	# Redirect back to the thread 
 	return redirect(reverse("thread", kwargs={"thread_id": int(thread_id)}))
 
-	return HttpResponse("hello")
+# login required
+# post required
+@csrf_exempt
+def vote(request):
+	"""
+	Register a vote for a comment.
+	"""	
+	data = json.dumps({"error":False})
+	return HttpResponse(data)
 
 def user_profile(request, username):
 	"""
