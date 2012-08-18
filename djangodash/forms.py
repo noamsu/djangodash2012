@@ -20,3 +20,11 @@ class ThreadForm(forms.Form):
                               widget=forms.Textarea(attrs={'cols': WIDTH,
                                      					   'rows': HEIGHT}),
                               required=True)
+
+class CommentForm(forms.Form):
+	"""
+	Form for adding  new comments.
+	"""
+	content = forms.CharField(label='', 
+                              widget=forms.Textarea(),
+                              required=True)
