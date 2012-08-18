@@ -8,6 +8,7 @@ from django.http import HttpResponse
 from django.contrib.auth.forms import UserCreationForm
 
 from djangodash.forms import LoginForm
+from djangodash.models import *
 
 def render(template, data, request):
 	"""
@@ -19,12 +20,15 @@ def home(request):
 	"""
 	Home page.
 	"""
-
 	user = request.user
+
+	# Get all threads
+	threads = Thread.objects.all()
 
 	return render("home.html", 
 			{"user":user,
-			 "is_logged_in":user.is_authenticated()}, 
+			 "is_logged_in":user.is_authenticated(),
+			 "threads":threads}, 
 			request)
 
 def login(request):
