@@ -1,6 +1,8 @@
 from django.shortcuts import render as render_to_response, redirect
+from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.http import HttpResponse
+from django.contrib.auth.forms import UserCreationForm
 
 from djangodash.forms import LoginForm
 
@@ -32,7 +34,9 @@ def login(request):
 		if form.is_valid():
 			username = form.cleaned_data["username"]
 			password = form.cleaned_data["password"]
-			print username, password
+
+			# FIXME continue the login process
+
 		return render("login.html",{"form":form}, request)
 
 	else:
@@ -40,5 +44,29 @@ def login(request):
 		form = LoginForm()
 
 	return render("login.html",
+		{"form":form},
+		request)
+
+
+def register(request):
+	"""
+	User registration.
+	"""
+
+	if request.method == "POST":
+		form = UserCreationForm(request.POST)
+		if form.is_valid():
+			new_user = form.save()
+			# Login as the new user
+			if new_user.is_active:
+				username = form.cleaned_data["username"]
+				password = form.cleaned_data["password1"]
+				user = authenticate(username=username,
+								    password=password)
+				login(request)
+				return redirect("/")
+	
+	form = UserCreationForm()
+	return render("register.html",
 		{"form":form},
 		request)
