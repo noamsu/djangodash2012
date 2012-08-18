@@ -1,4 +1,8 @@
+{% extends "base.html" %}
 {% load custom_tags %}
+
+{% block main %}
+
 Thread page for: {{thread.content}}
 <br />
 <br />
@@ -13,3 +17,5 @@ Thread page for: {{thread.content}}
 {% for comment in structure %}
 	{{comment|format_threaded_comments}}
 {% endfor %}
+
+{% endblock %}
