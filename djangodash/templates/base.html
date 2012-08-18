@@ -11,6 +11,16 @@
 </head>
 
 <body>
+	<div align="right">
+		{% if is_logged_in %}
+			Logout
+		{% else  %}
+			<a href="{% url login %}">Login</a>
+		{% endif %}
+	</div>
+
+	<hr>
+
 	{% block main %}
 	{% endblock %}
 </body>

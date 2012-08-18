@@ -13,6 +13,18 @@ def home(request):
 	Home page.
 	"""
 
+	user = request.user
+
 	return render("home.html", 
-			{}, 
+			{"user":user,
+			 "is_logged_in":user.is_authenticated()}, 
 			request)
+
+def login(request):
+	"""
+	Login view.
+	"""
+
+	return render("login.html",
+		{},
+		request)
