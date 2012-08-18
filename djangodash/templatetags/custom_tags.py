@@ -86,8 +86,9 @@ def format_threaded_comments(value, autoescape=None):
                 sublist = '\n%s<ul>\n%s\n%s</ul>\n%s' % (indent, sublist,
                                                          indent, indent)
             
-            output.append('%s<li>%s%s</li>' % (indent,
-                    escaper(title), sublist))
+            # Render comment.html for every comment.
+            comment_html = render_to_string("comment.html", {"comment":title, "rest_rendered_comments":sublist, "thread":title.thread})
+            output.append(comment_html)
             i += 1
         return '\n'.join(output)
     value, converted = convert_old_style_list(value)
