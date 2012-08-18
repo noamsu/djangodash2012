@@ -61,11 +61,12 @@ def thread(request, thread_id):
 	except Thread.DoesNotExist:
 		raise Http404()
 
-	comments = Comment.objects.filter(thread=thread)
+	top_comments = Comment.objects.filter(thread=thread, parent=None)
+	structure = [t.get_tree(t) for t in top_comments]
 
 	return render("thread.html",
 		{"thread":thread,
-		 "comments":comments},
+		 "structure":structure},
 		request)
 
 # make this require a POST request
