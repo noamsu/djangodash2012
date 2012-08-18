@@ -7,4 +7,9 @@ from djangodash.models import *
 class ThreadAdmin(admin.ModelAdmin):
 	pass
 
+class CommentAdmin(admin.ModelAdmin):
+	pass
+
+admin.site.register(Comment, CommentAdmin)
 admin.site.register(Thread, ThreadAdmin)
+
