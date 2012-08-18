@@ -1,5 +1,7 @@
 from django.shortcuts import render as render_to_response, redirect
-from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth import authenticate, login
+from django.core.urlresolvers import reverse
+from django.contrib.auth import logout as auth_logout
 from django.contrib.auth.models import User
 from django.http import HttpResponse
 from django.contrib.auth.forms import UserCreationForm
@@ -65,8 +67,16 @@ def register(request):
 								    password=password)
 				login(request)
 				return redirect("/")
-	
-	form = UserCreationForm()
+	else:
+		form = UserCreationForm()
 	return render("register.html",
 		{"form":form},
 		request)
+
+def logout(request):
+	"""
+	Log the user out.
+	"""
+	print  "made it here"
+	auth_logout(request)
+	return redirect(reverse("home"))

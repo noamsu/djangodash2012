@@ -9,6 +9,7 @@ urlpatterns = patterns('',
     url(r'^$', 'djangodash.views.home', name='home'),
     url(r'^login$', 'djangodash.views.login', name='login'),
     url(r'^register$', 'djangodash.views.register', name='register'),
+    url(r'^logout$', 'djangodash.views.logout', name='logout'),
     # url(r'^djangodash/', include('djangodash.foo.urls')),
 
     # Uncomment the admin/doc line below to enable admin documentation:
