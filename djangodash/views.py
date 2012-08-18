@@ -2,6 +2,8 @@ from django.shortcuts import render as render_to_response, redirect
 from django.contrib.auth.models import User
 from django.http import HttpResponse
 
+from djangodash.forms import LoginForm
+
 def render(template, data, request):
 	"""
 	Wrapper for rendering a response.
@@ -22,9 +24,21 @@ def home(request):
 
 def login(request):
 	"""
-	Login view.
+	Display the login page and log the user in.
 	"""
 
+	if request.method == "POST":
+		form = LoginForm(request.POST)
+		if form.is_valid():
+			username = form.cleaned_data["username"]
+			password = form.cleaned_data["password"]
+			print username, password
+		return render("login.html",{"form":form}, request)
+
+	else:
+		assert request.method == "GET"
+		form = LoginForm()
+
 	return render("login.html",
-		{},
+		{"form":form},
 		request)
