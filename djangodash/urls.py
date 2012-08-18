@@ -11,6 +11,9 @@ urlpatterns = patterns('',
     url(r'^register$', 'djangodash.views.register', name='register'),
     url(r'^logout$', 'djangodash.views.logout', name='logout'),
 
+    # Add a comment
+    url(r'^add_comment$', 'djangodash.views.add_comment', name='add_comment'),
+
     # Thread page
 	url(r'^thread/(?P<thread_id>.*)$', 'djangodash.views.thread', name='thread'),
 

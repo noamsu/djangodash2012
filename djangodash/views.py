@@ -65,6 +65,33 @@ def thread(request, thread_id):
 		{"thread":thread},
 		request)
 
+# make this require a POST request
+# make login required
+def add_comment(request):
+
+	user = request.user
+
+	thread_id = request.POST.get("thread_id")
+	thread = Thread.objects.get(id=thread_id)
+	comment_id = request.POST.get("comment_id")
+
+	comment = None
+	if comment_id:
+		comment = Comment.objects.get(id=comment_id)
+
+
+	form = CommentForm(request.POST)
+	if form.is_valid():
+		content = form.cleaned_data["content"]
+		new_comment = Comment(author=user,
+							  content=content,
+							  parent=comment,
+							  thread=thread)
+		new_comment.save()
+
+		return redirect("/")
+
+	return HttpResponse("hello")
 
 def user_profile(request, username):
 	"""

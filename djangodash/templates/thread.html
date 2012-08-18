@@ -1,1 +1,10 @@
 Thread page for: {{thread.content}}
+<br />
+<br />
+<form action="/add_comment" method="POST">
+	{% csrf_token %}
+	Write a comment
+	<div><textarea name="content" rows="3" cols="50"></textarea></div>
+	<input type="hidden" name="thread_id" value="{{thread.pk}}" />
+	<input class="comment-input" type='submit' value="Create new comment" />
+</form>
