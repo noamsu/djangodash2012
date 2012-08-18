@@ -12,7 +12,7 @@ class Comment(models.Model):
 	thread = models.ForeignKey("Thread")
 	votes = models.PositiveIntegerField(default=0)
 
-	def get_children(self, c):
+	def get_children(self):
 		return self.comment_set.filter(parent=self)
 
 	def __unicode__(self):
