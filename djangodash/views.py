@@ -39,7 +39,7 @@ def home(request):
 		form = ThreadForm()
 
 	# Get all threads
-	threads = Thread.objects.all()
+	threads = Thread.objects.all() 
 
 	return render("home.html", 
 			{"user":user,
@@ -47,6 +47,12 @@ def home(request):
 			 "threads":threads,
 			 "form":form}, 
 			request)
+
+def user_profile(request, username):
+	user = request.user
+	return render("profile.html", {
+		"user":user
+		}, request)
 
 def login(request):
 	"""
