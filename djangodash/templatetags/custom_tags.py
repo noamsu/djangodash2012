@@ -2,7 +2,6 @@ from django import template
 from django.utils.html import conditional_escape
 from django.utils.safestring import mark_safe
 from django.template.loader import render_to_string
-from django.utils.encoding import force_text
 
 register = template.Library()
 
@@ -88,7 +87,7 @@ def format_threaded_comments(value, autoescape=None):
                                                          indent, indent)
             
             output.append('%s<li>%s%s</li>' % (indent,
-                    escaper(force_text(title)), sublist))
+                    escaper(title), sublist))
             i += 1
         return '\n'.join(output)
     value, converted = convert_old_style_list(value)
