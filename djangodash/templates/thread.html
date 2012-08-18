@@ -18,4 +18,18 @@ Thread page for: {{thread.content}}
 	{{comment|format_threaded_comments}}
 {% endfor %}
 
+<script type="text/javascript">
+	function get_last_char(str){
+		return str.split("_")[1];
+	}
+
+	$(".reply-link").click(function(){
+		var id = $(this).parent().attr("id");
+		var last_char = get_last_char(id);
+		// specifically, form with...
+		$("#" + last_char).slideDown("fast")
+	})
+
+</script>
+
 {% endblock %}
