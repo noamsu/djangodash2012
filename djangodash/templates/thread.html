@@ -20,10 +20,15 @@ Thread page for: {{thread.content}}
 
 <script type="text/javascript">
 	function get_last_char(str){
+		// Return the comment id, which is found as the number
+		// at the end of the element id.
 		return str.split("_")[1];
 	}
 
 	$(".reply-link").click(function(){
+		// Side down the comment form when the
+		// reply button is pressed.
+		
 		var id = $(this).parent().attr("id");
 		var last_char = get_last_char(id);
 		$("#" + last_char).slideDown("fast")

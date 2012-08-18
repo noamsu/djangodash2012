@@ -97,6 +97,7 @@ def add_comment(request):
 							  thread=thread)
 		new_comment.save()
 
+	# Redirect back to the thread 
 	return redirect(reverse("thread", kwargs={"thread_id": int(thread_id)}))
 
 	return HttpResponse("hello")

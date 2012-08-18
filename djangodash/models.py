@@ -27,8 +27,6 @@ class Comment(models.Model):
 	def __unicode__(self):
 		return u"(%s, %s)" % (self.pk, self.content)
 
-
-
 class Thread(models.Model):
 	"""
 	Represents a Thread.
@@ -38,3 +36,33 @@ class Thread(models.Model):
 
 	def __unicode__(self):
 		return u"(%s, %s, %s)" % (self.id, self.creator, self.content)
+
+
+class Vote(models.Model):
+	"""
+	Represents a vote. 
+	A vote object is created every time a user votes on a comment.
+	It is used to keep track of the comments that users has voted on.
+	"""
+
+	user = models.ForeignKey(User)
+	comment = models.ForeignKey(Comment)
+
+	# A Vote can represent an upvote or a downvote.
+
+	VOTE_DOWN = 0
+	VOTE_UP = 1
+
+	VOTE_TYPES = (
+		(VOTE_UP, "Voted Up"),
+		(VOTE_DOWN, "Voted Down")
+	)
+
+	vote_type = models.IntegerField(choices=VOTE_TYPES)
+
+
+
+
+
+	
+
