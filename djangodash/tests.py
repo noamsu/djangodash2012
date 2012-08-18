@@ -61,7 +61,21 @@ class TestCommentsTree(TestBase):
 		self.testGetChildren()
 		assert Comment.objects.count() == 5
 
-		
+		# Get the single parent comment
+		comment = Comment.objects.get(parent=None)
+
+		# Get the entire structure
+		s = comment.get_tree(comment)
+
+		# Test the structure. It should look like:
+		# [<6>, [[<7>, [[<8>, [[<9>, []]]], <10>, []]]]]
+
+		assert s[0].id == 6
+		assert s[1][0][0].id == 7
+		assert s[1][0][1][0][0].id == 8
+		assert s[1][0][1][0][1][0][0].id == 9
+		assert s[1][0][1][1][0].id == 10
+
 
 
 
