@@ -1,7 +1,8 @@
 from django.shortcuts import render as render_to_response, redirect
-from django.contrib.auth import authenticate, login
-from django.core.urlresolvers import reverse
+from django.contrib.auth import authenticate
+from django.contrib.auth import login as auth_login
 from django.contrib.auth import logout as auth_logout
+from django.core.urlresolvers import reverse
 from django.contrib.auth.models import User
 from django.http import HttpResponse
 from django.contrib.auth.forms import UserCreationForm
@@ -37,8 +38,18 @@ def login(request):
 			username = form.cleaned_data["username"]
 			password = form.cleaned_data["password"]
 
-			# FIXME continue the login process
+			user = authenticate(username=username,
+				         password=password)
 
+			if user is not None:
+				auth_login(request, user)
+				return redirect(reverse("home"))
+
+			# Incorrect username/password
+			return render("login.html", {"form":form,
+										 "login_error":True}, request)
+
+		# Invalid form
 		return render("login.html",{"form":form}, request)
 
 	else:
@@ -63,10 +74,10 @@ def register(request):
 			if new_user.is_active:
 				username = form.cleaned_data["username"]
 				password = form.cleaned_data["password1"]
-				user = authenticate(username=username,
-								    password=password)
-				login(request)
-				return redirect("/")
+				authenticate(username=username,
+						     password=password)
+				auth_login(request)
+				return redirect(reverse("home"))
 	else:
 		form = UserCreationForm()
 	return render("register.html",

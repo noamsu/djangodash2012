@@ -1,7 +1,9 @@
-
-
 <form action="" method="POST">
 	{% csrf_token %}
 	{{form.as_p}}
 	<input type="submit" value="Login" />
 </form>
+
+{% if login_error %}
+	Incorrect Login. Please try again.
+{% endif %}
