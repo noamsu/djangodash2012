@@ -12,7 +12,8 @@ class Comment(models.Model):
 	thread = models.ForeignKey("Thread")
 	votes = models.PositiveIntegerField(default=0)
 
-	
+	def __unicode__(self):
+		return u"(%s, %s)" % (self.pk, self.content)
 
 
 
