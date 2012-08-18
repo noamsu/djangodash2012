@@ -5,7 +5,7 @@ from django.contrib.auth import logout as auth_logout
 from django.contrib.auth.decorators import login_required
 from django.core.urlresolvers import reverse
 from django.contrib.auth.models import User
-from django.http import HttpResponse
+from django.http import HttpResponse, Http404
 from django.contrib.auth.forms import UserCreationForm
 
 from djangodash.forms import *
@@ -48,6 +48,23 @@ def home(request):
 			 "threads":threads,
 			 "form":form}, 
 			request)
+
+def thread(request, thread_id):
+	"""
+	Page for a thread. This page will contain all the comments
+	assosiated with the given thread.
+	"""
+
+	# Get the thread
+	try:
+		thread = Thread.objects.get(id=thread_id)
+	except Thread.DoesNotExist:
+		raise Http404()
+
+	return render("thread.html",
+		{"thread":thread},
+		request)
+
 
 def user_profile(request, username):
 	"""

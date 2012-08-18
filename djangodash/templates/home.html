@@ -11,7 +11,7 @@
 </form>
 
 {% for thread in threads %}
-	{{thread}}
+	<a href="{% url thread thread.id %}">{{thread.content}}</a>
 	<br />
 {% endfor %}
 
