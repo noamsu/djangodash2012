@@ -7,6 +7,7 @@ from django.core.urlresolvers import reverse
 from django.contrib.auth.models import User
 from django.http import HttpResponse, Http404
 from django.contrib.auth.forms import UserCreationForm
+from django.views.decorators.csrf import csrf_exempt
 
 from djangodash.forms import *
 from djangodash.models import *
@@ -71,6 +72,7 @@ def thread(request, thread_id):
 
 # make this require a POST request
 # make login required
+@csrf_exempt
 def add_comment(request):
 	"""
 	Add a new comment.

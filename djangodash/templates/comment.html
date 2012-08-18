@@ -1,6 +1,31 @@
-<hr>
-helllllo {{comment}}
 
+<hr>
+<table style='border-spacing: 0px; 'border=0>
+    <tr>
+        <td>
+        <div id="first_{{comment.pk}}" style='margin:0; padding:0px;line-height:0px; border-spacing:0px; border-collapse:collapse'>
+            <img class="vote_up_{{comment.pk}}" src="/media/up.png" />
+            <center id="count_{{comment.pk}}">{{comment.votes}}</center>
+            <img class="vote_down_{{comment.pk}}" src="/media/down.png" />
+        </div>
+    </td>
+    <td width="5%">
+        </td>
+    <td>
+    <div id="second_{{comment.pk}}" class="comment">
+        <span class="comment-info">{{comment.pk}} says:</span>
+        <li>{{comment.content}}</li>
+        <span class="reply-link">reply</span>
+        <form style='' id="{{comment.pk}}" action="/add_comment" method="POST">
+        {% csrf_token %}
+        <div><textarea name="content" rows="3" cols="50"></textarea></div>
+        <input type="hidden" name="comment_id" value="{{comment.pk}}" />
+        <input type="hidden" name="thread_id" value="{{thread.pk}}" />
+        <input class="comment-input" type='submit' value="add comment" />
+        </form>
+    </div>
+</div>
+</td></tr></table>
 {% autoescape off %}
     {{rest_rendered_comments}}
 {% endautoescape %}
