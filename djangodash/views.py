@@ -30,8 +30,10 @@ def home(request):
 		if form.is_valid():
 			# Create a new thread
 			thread_content = form.cleaned_data["content"]
+
 			new_thread = Thread(content=thread_content,
 							    creator=user)
+
 			new_thread.save()
 	else:
 		form = ThreadForm()
