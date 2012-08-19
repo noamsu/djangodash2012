@@ -136,7 +136,7 @@ def add_comment(request):
 
 	# Redirect back to the thread 
 	return redirect(reverse("thread", kwargs={"thread_id": int(thread_id)}) +
-                    "#first_%s" % comment.id)
+                    "#first_%s" % comment_id)
 
 @login_required
 @csrf_exempt

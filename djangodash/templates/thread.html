@@ -9,7 +9,7 @@
 posted by <span id="author-info">
 	<a href="{% url user thread.creator %}">{{thread.creator}}</a>
 </span>
-<h1 style='margin:0; padding:0;'>{{thread.content}}</h1>
+<h1 style='margin:0; padding:0;'>{{thread.content|urlize}}</h1>
 
 <br /><br />
 
@@ -22,7 +22,7 @@ posted by <span id="author-info">
 </form>
 
 {% for comment in structure %}
-	{{comment|format_threaded_comments:user_voting_data}}
+	{{comment|format_threaded_comments:user_voting_data|urlize}}
 {% endfor %}
 
 <script type="text/javascript">
