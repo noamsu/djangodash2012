@@ -53,25 +53,48 @@ def home(request):
 			request)
 
 def thread(request, thread_id):
-	"""
-	Page for a thread. This page will contain all the comments
-	assosiated with the given thread.
-	"""
+    """
+    Page for a thread. This page will contain all the comments
+    assosiated with the given thread.
+    """
 
-	user = request.user
+    user = request.user
 
 	# Get the thread
-	try:
+    try:
 		thread = Thread.objects.get(id=thread_id)
-	except Thread.DoesNotExist:
-		raise Http404()
+    except Thread.DoesNotExist:
+        raise Http404()
 
-	top_comments = Comment.objects.filter(thread=thread, parent=None)
-	structure = [t.get_tree(t) for t in top_comments]
+    top_comments = Comment.objects.filter(thread=thread, parent=None)\
+                                  .order_by("-votes")
+    
+    structure = [t.get_tree(t) for t in top_comments]
 
-	return render("thread.html",
+	# Get all the ids of the comments that the current user
+	# voted on. This is needed to highlight the arrows
+	# of those votes appropriately.
+    positive_ids = Vote.objects.filter(user=user,
+	 							   comment__thread=thread, 
+	 							   vote_type=Vote.VOTE_UP) \
+						   .values_list("comment_id", flat=True)
+
+    # Get ids of all negative votes
+    negative_ids = Vote.objects.filter(user=user,
+	 							   comment__thread=thread, 
+	 							   vote_type=Vote.VOTE_DOWN) \
+						   .values_list("comment_id", flat=True)
+
+    
+    user_voting_data = {
+    	"positive":positive_ids,
+    	"negative":negative_ids,
+    }
+
+    return render("thread.html",
 		{"thread":thread,
 		 "structure":structure,
+		 "user_voting_data":user_voting_data,
 		 "is_logged_in":user.is_authenticated(),
 		 "user":user},
 		request)
