@@ -76,6 +76,10 @@ class UserProfile(models.Model):
         User
     )
 
+    def display_name(self):
+    	if (self.user.first_name + self.user.last_name).strip():
+    		return self.user.first_name + " " + self.user.last_name
+    	return self.user.username
 
 @receiver(post_save, sender=User, dispatch_uid='userprofile.create')
 def create_profile(sender, **kwargs):
