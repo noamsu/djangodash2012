@@ -64,6 +64,7 @@ textarea {
 </head>
 
 <body>
+	<div id="wrapper">
 	<div align="right">
 		{% if is_logged_in %}
 			Logged in as <a href="{% url user user %}">{{user}}</a> | 
@@ -75,8 +76,9 @@ textarea {
 	</div>
 
 	<hr>
+	<br />
+
 	
-	<div id="wrapper">
 		{% block main %}
 		{% endblock %}
 	</div>
