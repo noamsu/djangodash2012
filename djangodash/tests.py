@@ -177,12 +177,14 @@ class TestThreads(TestBase):
 
 		response = self.client.post(self.url, {"content":"new thread"})
 
-		assert response.status_code == 200
+		assert response.status_code == 302
 
 		threads = Thread.objects.all()
 		assert len(threads) == 2
 		assert threads[1].content == "new thread"
 		assert threads[1].creator == self.user
+
+
 
 
 
