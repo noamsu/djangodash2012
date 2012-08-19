@@ -16,7 +16,7 @@ class Comment(models.Model):
 		"""
 		Return the immediate children of the current comment.
 		"""
-		return self.comment_set.filter(parent=self)
+		return self.comment_set.filter(parent=self).order_by("-votes")
 
 	def get_tree(self, c):
 		"""
