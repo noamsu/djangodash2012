@@ -241,8 +241,33 @@ class TestThreads(TestBase):
 		assert len(threads) == 1
 
 class TestFollowing(TestBase):
-	def testFollowUser(self):
-		pass
+    """
+    Test the follower/following system.
+    """
+    def setUp(self):
+        super(TestFollowing, self).setUp()
+
+        self.url = "/follow"
+        self.client.login(username="test", password="password")
+
+    def create_new_user(self, username, password):
+        user = User(username=username, password="!")
+        user.set_password(password)
+        user.save()
+        return user
+
+    def testFollowUser(self):
+        user_one = self.user
+        user_two = self.create_new_user("u","p")
+
+        assert user_one != user_two
+        assert user_one.get_profile().is_following(user_two) == False
+
+        user_two_id = user_two.id
+        self.client.post(self.url, {"profile_user_id":user_two_id,
+                                    "action":"follow"})
+
+        assert user_one.get_profile().is_following(user_two) == True
 
 
 
