@@ -26,7 +26,7 @@
     <td>
     <div id="second_{{comment.pk}}" class="comment">
         <span class="comment-info">
-            <a class="author-info" href="{% url user comment.author %}">{{comment.author}}</a>    says:</span>
+            <a class="author-info" href="{% url user comment.author %}">{{comment.author.get_profile.display_name}}</a>    says:</span>
         <li><span id="comment-content" style='font-size:14px'>{{comment.content}}</span></li>
         <span class="reply-link">reply</span>
         <form style='display:none;' id="{{comment.pk}}" action="/add_comment" method="POST">

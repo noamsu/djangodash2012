@@ -7,7 +7,7 @@
 {% block main %}
 
 posted by <span id="author-info">
-	<a href="{% url user thread.creator %}">{{thread.creator}}</a>
+	<a href="{% url user thread.creator %}">{{thread.creator.get_profile.display_name}}</a>
 </span>
 <h1 style='margin:0; padding:0;'>{{thread.content|urlize}}</h1>
 
