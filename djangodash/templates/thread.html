@@ -37,6 +37,14 @@ Thread page for: {{thread.content}}
 	// Vote on comments:
 
 	$('[class^=vote_up]').click(function(){
+
+		var logged_in = "{{is_logged_in}}";
+
+		if (logged_in === "False"){
+			alert("Please log in to vote")
+			return;
+		}
+
 		var id= $(this).parent().attr("id");
 		var last_char = get_last_char(id);
 
@@ -76,6 +84,13 @@ Thread page for: {{thread.content}}
 	})
 
 	$('[class^=vote_down]').click(function(){
+		var logged_in = "{{is_logged_in}}";
+
+		if (logged_in === "False"){
+			alert("Please log in to vote")
+			return;
+		}
+		
 		var id= $(this).parent().attr("id");
 		var last_char = get_last_char(id);
 
