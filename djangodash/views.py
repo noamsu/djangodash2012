@@ -132,7 +132,8 @@ def add_comment(request):
 		new_comment.save()
 
 	# Redirect back to the thread 
-	return redirect(reverse("thread", kwargs={"thread_id": int(thread_id)}))
+	return redirect(reverse("thread", kwargs={"thread_id": int(thread_id)}) +
+                    "#first_%s" % comment.id)
 
 
 # post required
