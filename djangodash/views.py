@@ -28,6 +28,8 @@ def home(request):
     Home page.
     """
     user = request.user
+    is_logged_in = user.is_authenticated()
+
     sort = request.GET.get("sort_options")
     if sort: sort = sort.strip()
 
@@ -67,11 +69,13 @@ def home(request):
         # Personalize results:
         # Return the threads created by the users who the current
         # user is following.
+        if not is_logged_in:
+            threads = []
+        else:
+            following_ids = user.get_profile().following.values_list("id", flat=True)
+            sort_by = "-date"
 
-        following_ids = user.get_profile().following.values_list("id", flat=True)
-        sort_by = "-date"
-
-        threads = Thread.objects.all() \
+            threads = Thread.objects.all() \
                         .filter(creator__pk__in=following_ids) \
                         .annotate(comment_count=Count('comment')) \
                         .order_by(sort_by)
