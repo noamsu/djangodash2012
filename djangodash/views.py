@@ -442,14 +442,6 @@ def logout(request):
 	auth_logout(request)
 	return redirect(reverse("home"))
 
-
-def about(request):
-    """
-    About me.
-    """
-
-    return render("about.html", {}, request)
-
 def about_comminator(request):
     """
     About Comminator: help & info page
