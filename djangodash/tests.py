@@ -20,8 +20,6 @@ class TestBase(TestCase):
 		# Client configuration
 		self.client = Client()
 
-
-
 	def create_comment(self, comment=None):
 		"""
 		When testing parent and tree structures of threaded 
@@ -160,7 +158,7 @@ class TestVotes(TestBase):
 		assert comment.votes == 0
 
 
-
-
+	# Vote up and then down
+	# Vote down and then up
 
 

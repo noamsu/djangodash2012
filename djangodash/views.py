@@ -169,7 +169,32 @@ def vote(request):
 		return HttpResponse(data)
 
 
+	if vote_type == Vote.VOTE_UP and action=="down":
+		print "VoteUP and try to down"
+		comment.votes -= 2
+		comment.save()
+		vote.vote_type = Vote.VOTE_DOWN
+		vote.save()
+		data = json.dumps({"error":False, "score":comment.votes})
+		return HttpResponse(data)
 
+	if vote_type == Vote.VOTE_DOWN and action == "down":
+		print "VoteDOWN and try to down"
+		# Take back the down vote
+		comment.votes += 1
+		comment.save()
+		vote.delete()
+		data = json.dumps({"error":False, "score":comment.votes})
+		return HttpResponse(data)
+
+	if vote_type == Vote.VOTE_DOWN and action == "up":
+		print "VoteDOWN and try to up"
+		comment.votes += 2
+		comment.save()
+		vote.vote_type = Vote.VOTE_UP
+		vote.save()
+		data = json.dumps({"error":False, "score":comment.votes})
+		return HttpResponse(data)
 
 
 	data = json.dumps({"error":False})
