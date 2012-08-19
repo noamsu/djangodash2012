@@ -197,7 +197,24 @@ class TestThreads(TestBase):
 
 		threads = Thread.objects.all()
 		assert len(threads) == 0
-		
+
+	def testDeleteNonExistingThreads(self):
+		threads = Thread.objects.all()
+		assert len(threads) == 1
+
+		thread = threads[0]
+
+		# Delete a thread that does not exist
+		delete_url = "/delete"
+		response = self.client.post(delete_url, {"type":"thread",
+									  "_id":"11109977000"})
+
+		assert response.status_code == 302
+
+		# There should still be one thread
+		threads = Thread.objects.all()
+		assert len(threads) == 1
+
 
 
 
