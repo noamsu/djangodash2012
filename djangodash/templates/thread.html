@@ -52,7 +52,8 @@ Thread page for: {{thread.content}}
 	        dataType : "json",
 	        data     : data_to_send,
 	        success  : function(data){
-	        	console.log(data);
+				var new_count = String(data.score);
+				$("#count_" + last_char).html(new_count)
 	    	}
 		})
 	})

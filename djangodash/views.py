@@ -58,6 +58,8 @@ def thread(request, thread_id):
 	assosiated with the given thread.
 	"""
 
+	user = request.user
+
 	# Get the thread
 	try:
 		thread = Thread.objects.get(id=thread_id)
@@ -69,7 +71,9 @@ def thread(request, thread_id):
 
 	return render("thread.html",
 		{"thread":thread,
-		 "structure":structure},
+		 "structure":structure,
+		 "is_logged_in":user.is_authenticated(),
+		 "user":user},
 		request)
 
 # make this require a POST request
@@ -109,6 +113,49 @@ def vote(request):
 	"""
 	Register a vote for a comment.
 	"""	
+
+	user = request.user
+
+	comment_id = request.POST.get("comment_id")
+	action = request.POST.get("action")
+
+	# Get the comment
+	try:
+		comment = Comment.objects.get(id=int(comment_id))
+	except Comment.DoesNotExist:
+		data = json.dumps({"error":True})
+		return HttpResponse(data)
+
+	# Does a Vote object exist?
+	try:
+		vote = Vote.objects.get(user=user,
+								comment=comment)
+	except Vote.DoesNotExist:
+		# We are voting, essentially, for the first time on
+		# this comment.
+
+		vote_type = Vote.VOTE_UP
+
+		vote = Vote(user=user, 
+					comment=comment,
+					vote_type=vote_type)
+
+		# Modify the comment's vote count
+		if action == "up":
+			comment.votes += 1
+		else:
+			comment.votes -= 1
+		comment.save()
+
+		vote.vote_type = vote.VOTE_UP if action == "up" else Vote.VOTE_DOWN
+		vote.save()
+
+		# Return a success response
+		data = json.dumps({"error":False,
+						   "score":comment.votes})
+		return HttpResponse(data)
+
+
 	data = json.dumps({"error":False})
 	return HttpResponse(data)
 
