@@ -53,18 +53,29 @@ def home(request):
     # Get all threads
     num_threads = settings.THREADS_PER_PAGE
 
-    print sort
     if sort == "numcomments":
         sort_by = "-comment_count"
     elif sort == "recent":
         sort_by = "-date"
-    else:
-        sort_by = "-date"
 
-    print sort_by
-    threads = Thread.objects.all() \
+    if sort != "personal":
+
+        threads = Thread.objects.all() \
                             .annotate(comment_count=Count('comment')) \
                             .order_by(sort_by)
+
+    else:
+        # Personalize results:
+        # Return the threads created by the users who the current
+        # user is following.
+
+        following_ids = user.get_profile().following.values_list("id", flat=True)
+        sort_by = "-date"
+
+        threads = Thread.objects.all() \
+                        .filter(creator__pk__in=following_ids) \
+                        .annotate(comment_Count=Count('comment')) \
+                        .order_by(sort_by)
 
     return render("home.html", 
 			{"user":user,
@@ -332,6 +343,7 @@ def follow(request):
     profile = user.get_profile()
 
     profile_user_id = request.POST.get("profile_user_id")
+    action = request.POST.get("action")
 
     # Get the profile user
     try:
@@ -339,10 +351,14 @@ def follow(request):
     except User.DoesNotExist:
         return redirect(reverse("home"))
 
-    print profile.is_following(profile_user)
-
-    if not profile.is_following(profile_user):
-        profile.add_follower(profile_user)
+    if action == "follow":
+        # Follow user
+        if not profile.is_following(profile_user):
+            profile.add_follower(profile_user)
+    else:
+        # Unfollow user
+        if profile.is_following(profile_user):
+            profile.remove_follower(profile_user)
 
     return redirect(reverse("user", kwargs={"username":user.username}))
 
