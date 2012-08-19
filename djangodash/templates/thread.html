@@ -1,9 +1,8 @@
 {% extends "base.html" %}
 {% load custom_tags %}
 
-{% block head %}
+{% block title %} Thread | {{thread.content}} {% endblock %}
 
-{% endblock %}
 {% block main %}
 
 posted by <span id="author-info">
