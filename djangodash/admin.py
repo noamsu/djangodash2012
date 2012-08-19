@@ -10,6 +10,10 @@ class ThreadAdmin(admin.ModelAdmin):
 class CommentAdmin(admin.ModelAdmin):
 	pass
 
+class VoteAdmin(admin.ModelAdmin):
+	pass
+
+admin.site.register(Vote, VoteAdmin)
 admin.site.register(Comment, CommentAdmin)
 admin.site.register(Thread, ThreadAdmin)
 
