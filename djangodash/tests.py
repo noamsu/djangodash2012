@@ -215,6 +215,31 @@ class TestThreads(TestBase):
 		threads = Thread.objects.all()
 		assert len(threads) == 1
 
+	def testCannotDeleteSomeoneElsesThread(self):
+		threads = Thread.objects.all()
+		assert len(threads) == 1
+		thread = threads[0]
+
+		new_user = User(username="new", password="!")
+		new_user.set_password("user")
+		new_user.save()
+
+		assert new_user != thread.creator
+
+		# Login as the new user
+		self.client.login(userame="new", password="user")
+
+		# Try to delete another user's thread
+		delete_url = "/delete"
+		response = self.client.post(delete_url, {"type":"thread",
+									  "_id":"11109977000"})
+
+		assert response.status_code == 302
+
+		# The thread should still be there
+		threads = Thread.objects.all()
+		assert len(threads) == 1
+
 
 
 

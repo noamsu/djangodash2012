@@ -146,14 +146,22 @@ def delete(request):
     Delete a comment or a thread, based on the request.
     """
 
+    user = request.user
+
     obj_type = request.POST.get("type")
     obj_id = request.POST.get("_id")
 
     if obj_type == "thread":
+
+        # Get the thread
         try:
             thread = Thread.objects.get(id=int(obj_id))
         except Thread.DoesNotExist:
             return redirect(reverse("home"))
+
+        # We must be the creator of the thread in order to delete it
+        if thread.creator != user:
+            return redirect(reverse('home'))
 
         thread.delete()
 
