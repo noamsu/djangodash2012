@@ -1,3 +1,7 @@
+{% extends "base.html" %}
+
+{% block main %}
+
 <form action="" method="POST">
 	{% csrf_token %}
 	{{form.as_p}}
@@ -7,3 +11,5 @@
 {% if login_error %}
 	Incorrect Login. Please try again.
 {% endif %}
+
+{% endblock %}
