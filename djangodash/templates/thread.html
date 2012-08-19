@@ -58,6 +58,28 @@ Thread page for: {{thread.content}}
 		})
 	})
 
+	$('[class^=vote_down]').click(function(){
+		var id= $(this).parent().attr("id");
+		var last_char = get_last_char(id);
+
+		var data_to_send  = {"comment_id":last_char, "action":"down"}
+
+		self = $(this)
+
+		$.ajax({
+	        url      : "/ajax/vote",
+	        type     : "POST",
+	        dataType : "json",
+	        data     : data_to_send,
+	        success  : function(data){
+	        	console.log(data)
+				var new_count = String(data.score);
+				$("#count_" + last_char).html(new_count)
+
+	        }
+		})
+	})
+
 
 
 </script>
