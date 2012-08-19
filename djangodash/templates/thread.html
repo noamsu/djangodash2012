@@ -6,11 +6,16 @@
 {% endblock %}
 {% block main %}
 
-<h1>{{thread.content}}</h1>
+posted by <span id="author-info">
+	<a href="{% url user thread.creator %}">{{thread.creator}}</a>
+</span>
+<h1 style='line-height:2px'>{{thread.content}}</h1>
+
+<br /><br />
 
 <form action="/add_comment" method="POST">
 	{% csrf_token %}
-	Write a comment
+	Add a comment
 	<div><textarea name="content" rows="3" cols="50"></textarea></div>
 	<input type="hidden" name="thread_id" value="{{thread.pk}}" />
 	<input class="comment-input" type='submit' value="Create new comment" />
