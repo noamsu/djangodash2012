@@ -12,6 +12,7 @@ urlpatterns = patterns('',
     url(r'^register$', 'djangodash.views.register', name='register'),
     url(r'^logout$', 'djangodash.views.logout', name='logout'),
     url(r'^about$', 'djangodash.views.about', name='about'),
+    url(r'^about_comminator$', 'djangodash.views.about_comminator', name='about_comminator'),
 
     # Add a comment
     url(r'^add_comment$', 'djangodash.views.add_comment', name='add_comment'),

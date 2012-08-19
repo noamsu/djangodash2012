@@ -449,3 +449,10 @@ def about(request):
     """
 
     return render("about.html", {}, request)
+
+def about_comminator(request):
+    """
+    About Comminator: help & info page
+    """
+
+    return render("about_comminator.html", {}, request)
