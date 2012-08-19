@@ -4,6 +4,11 @@
 {% block main %}
 <h1>{{user.get_profile.display_name}}</h1>
 
+<form action="/follow" method="POST"/>
+	{% csrf_token %}
+	<input class="input-button" type="submit" value="+ Follow" />
+</form>
+
 Recent comments:
 
 {% paginate num_comments comments %}

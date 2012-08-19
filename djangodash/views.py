@@ -310,6 +310,14 @@ def user_profile(request, username):
         "num_comments":num_comments
 		}, request)
 
+def follow(request):
+    """
+    Follow or unfollow a user, based on the request.
+    """
+
+    print "ok!!"
+    return HttpResponse("wow")
+
 def login(request):
     """
     Display the login page and log the user in.

@@ -24,6 +24,8 @@ urlpatterns = patterns('',
     # Profile page
 	url(r'^user/(?P<username>.*)$', 'djangodash.views.user_profile', name='user'),
 
+	# Follow a user
+	url(r'^follow$', 'djangodash.views.follow', name='follow'),
 
 	# Ajax urls
     url(r'^ajax/vote', 'djangodash.views.vote', name="vote"),
