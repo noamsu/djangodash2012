@@ -9,6 +9,7 @@ from django.http import HttpResponse, Http404
 from django.contrib.auth.forms import UserCreationForm
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.decorators import login_required
+from django.db.models import Count
 
 from djangodash.forms import *
 from djangodash.models import *
@@ -47,7 +48,7 @@ def home(request):
         form = ThreadForm()
 
     # Get all threads
-    threads = Thread.objects.all().order_by("-date")
+    threads = Thread.objects.all().annotate(comment_count=Count('comment')).order_by("-date")
 
     return render("home.html", 
 			{"user":user,

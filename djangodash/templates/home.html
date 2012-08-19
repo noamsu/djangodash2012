@@ -11,20 +11,23 @@
 </form>
 
 {% for thread in threads %}
+	<table style="font-size:13px"><tr><td>
 	posted by
 	<a class="author-info" href="{% url user thread.creator %}">{{thread.creator}}</a>
+</td><td>
 
-	{% if thread.creator == user %}
-	| 
-	<form action="/delete" method="POST">
-		<input type="hidden" name="_id" value="{{thread.pk}}" />
-		<input type="hidden" name="type" value="thread" />
-		<input type="submit" value="delete" />
-	</form>
-	{% endif %}
-	<br />
+</td></tr></table>
 	<blockquote>
 	 <a class="thread" href="{% url thread thread.id %}">{{thread.content}}</a>
+	 <br />
+	 <small>{{thread.comment_count}} comments</small>
+	 {% if thread.creator == user %}
+	 	<form action="/delete" method="POST">
+		<input type="hidden" name="_id" value="{{thread.pk}}" />
+		<input type="hidden" name="type" value="thread" />
+		<input style="font-size:13px" class="form-button" type="submit" value="delete" />
+		</form>
+	{% endif %}
 	</blockquote>
 	<hr>
 	<br />
