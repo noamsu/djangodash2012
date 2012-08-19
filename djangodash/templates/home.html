@@ -20,13 +20,13 @@
 	<form name="myform" action="/" method="GET">
 		{% csrf_token %}
 	<span style="color:gray">Sort</span>
-	<input type="radio" name="sort_options" value="recent" 
+	<input id="recent" type="radio" name="sort_options" value="recent" 
 	{% if selected == "recent" %} checked {% endif %}
 		onClick="this.form.submit();"> Most Recent
-	<input type="radio" name="sort_options" value="personal"
+	<input id="personal" type="radio" name="sort_options" value="personal"
 	{% if selected == "personal" %} checked {% endif %}
 		onClick="this.form.submit();"> Personalized
-	<input type="radio" name="sort_options" value="numcomments"
+	<input id="numcomments" type="radio" name="sort_options" value="numcomments"
 	{% if selected == "numcomments" %} checked {% endif %}
 		onClick="this.form.submit();"> Number of Comments
 	</form>
@@ -56,6 +56,11 @@
 	<hr>
 	<br />
 {% endfor %}
+
+<p>
+	{% if selected == "personal" %} You should follow your friends and other users you're interested in seeing here {% endif %}
+</p>
+
 
 {% show_pages %}
 
