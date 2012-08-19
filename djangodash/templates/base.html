@@ -90,11 +90,24 @@ textarea {
 
 <body>
 	<div id="wrapper">
-		<table><tr><td>
-		<img src="/media/icon.png" />
-	</td><td>
-		<h1> <span class="logo-text">COMMINATOR</span> </h1>
-	</tr></td></table>
+		<table width="100%"><tr><td>
+			<img src="/media/icon.png" />
+		</td><td>
+			<h1> <span class="logo-text">COMMINATOR</span> </h1>
+		</td><td>
+		<span style="font-size:13px">
+			Welcome to comminator!
+
+			<br />
+			-Submit new threads (topics, thoughts, links, anything!)
+			<br />
+			-Comment on threads, votes on comments
+			<br />
+			-Follow users! See their updates
+		</span>
+
+		</tr></td></table>
+
 	<div align="right">
 		{% if is_logged_in %}
 			Logged in as <a href="{% url user user %}">{{user}}</a> | 
