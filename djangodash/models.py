@@ -79,6 +79,13 @@ class UserProfile(models.Model):
                                        symmetrical=False,
                                        related_name="followers")
 
+   	
+    def add_follower(self, user):
+        self.following.add(user)
+
+    def remove_follower(self, user):
+        self.following.remove(user)
+
     def display_name(self):
     	if (self.user.first_name + self.user.last_name).strip():
     		return self.user.first_name + " " + self.user.last_name
