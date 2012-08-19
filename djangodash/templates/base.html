@@ -7,10 +7,18 @@
 
 <style>
 
-body 
-{font:13px/1.231 arial,helvetica,clean,sans-serif;*font-size:small;*font:x-small}
+body {
+	font:13px/1.231 arial,helvetica,clean,sans-serif;*font-size:small;*font:x-small
+}
 
-.comment-content{font:13px/1.231 arial,helvetica,clean,sans-serif;*font-size:small;*font:x-small;}
+#wrapper{
+	margin:0 auto 0;
+	padding:20px;
+	width:60%;
+
+	box-shadow:0 0 10px #111;
+	position:relative
+}
 
 hr {
 	border: none;
@@ -67,9 +75,11 @@ textarea {
 	</div>
 
 	<hr>
-
-	{% block main %}
-	{% endblock %}
+	
+	<div id="wrapper">
+		{% block main %}
+		{% endblock %}
+	</div>
 </body>
 
 </html>
