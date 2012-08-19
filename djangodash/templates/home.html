@@ -13,6 +13,10 @@
 {% for thread in threads %}
 	posted by
 	<a class="author-info" href="{% url user thread.creator %}">{{thread.creator}}</a>
+
+	{% if thread.creator == user %}
+	| delete
+	{% endif %}
 	<br />
 	<blockquote>
 	 <a class="thread" href="{% url thread thread.id %}">{{thread.content}}</a>

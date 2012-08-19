@@ -40,12 +40,14 @@ def home(request):
 							    creator=user)
 
             new_thread.save()
+            
+        return redirect(reverse("home"))
 
     else:
         form = ThreadForm()
 
     # Get all threads
-    threads = Thread.objects.all() 
+    threads = Thread.objects.all()
 
     return render("home.html", 
 			{"user":user,

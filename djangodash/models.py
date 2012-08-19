@@ -11,6 +11,7 @@ class Comment(models.Model):
 	parent = models.ForeignKey("self", null=True, blank=True)
 	thread = models.ForeignKey("Thread")
 	votes = models.IntegerField(default=0)
+	date = models.DateTimeField(auto_now_add=True)
 
 	def get_children(self):
 		"""
@@ -33,6 +34,7 @@ class Thread(models.Model):
 	"""
 	creator = models.ForeignKey(User)
 	content =  models.TextField("Thread content")
+	date = models.DateTimeField(auto_now_add=True)
 
 	def __unicode__(self):
 		return u"(%s, %s, %s)" % (self.id, self.creator, self.content)
