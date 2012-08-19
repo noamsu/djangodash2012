@@ -80,6 +80,14 @@ class UserProfile(models.Model):
                                        related_name="followers")
 
 
+    def is_following(self, user):
+        """
+        Is u1 following u2?
+        """
+
+        return self.user.followers.filter(user=user).exists()
+
+
     def add_follower(self, user):
     	"""
     	Add a follower.

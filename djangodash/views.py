@@ -306,17 +306,35 @@ def user_profile(request, username):
 
     return render("profile.html", {
 		"user":user,
+        "profile_user":profile_user,
         "comments":comments,
-        "num_comments":num_comments
+        "num_comments":num_comments,
+        "is_logged_in":user.is_authenticated()
 		}, request)
 
+@login_required
 def follow(request):
     """
     Follow or unfollow a user, based on the request.
     """
 
-    print "ok!!"
-    return HttpResponse("wow")
+    user = request.user
+    profile = user.get_profile()
+
+    profile_user_id = request.POST.get("profile_user_id")
+
+    # Get the profile user
+    try:
+        profile_user = User.objects.get(id=int(profile_user_id))
+    except User.DoesNotExist:
+        return redirect(reverse("home"))
+
+    print profile.is_following(profile_user)
+
+    if not profile.is_following(profile_user):
+        profile.add_follower(profile_user)
+
+    return redirect(reverse("user", kwargs={"username":user.username}))
 
 def login(request):
     """

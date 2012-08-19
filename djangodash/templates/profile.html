@@ -4,10 +4,16 @@
 {% block main %}
 <h1>{{user.get_profile.display_name}}</h1>
 
-<form action="/follow" method="POST"/>
-	{% csrf_token %}
-	<input class="input-button" type="submit" value="+ Follow" />
-</form>
+{% if is_logged_in %}
+	<form action="/follow" method="POST"/>
+		{% csrf_token %}
+		<input type="hidden" name="profile_user_id" value="{{profile_user.pk}}" />
+		<input class="input-button" type="submit" value="+ Follow" />
+	</form>
+{% else %}
+	You need to log in to follow this user
+{% endif %}
+
 
 Recent comments:
 
