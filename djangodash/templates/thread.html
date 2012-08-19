@@ -1,11 +1,13 @@
 {% extends "base.html" %}
 {% load custom_tags %}
 
+{% block head %}
+
+{% endblock %}
 {% block main %}
 
-Thread page for: {{thread.content}}
-<br />
-<br />
+<h1>{{thread.content}}</h1>
+
 <form action="/add_comment" method="POST">
 	{% csrf_token %}
 	Write a comment
@@ -90,7 +92,7 @@ Thread page for: {{thread.content}}
 			alert("Please log in to vote")
 			return;
 		}
-		
+
 		var id= $(this).parent().attr("id");
 		var last_char = get_last_char(id);
 
