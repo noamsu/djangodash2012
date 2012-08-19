@@ -10,7 +10,7 @@ class Comment(models.Model):
 	content = models.TextField("Comment body")
 	parent = models.ForeignKey("self", null=True, blank=True)
 	thread = models.ForeignKey("Thread")
-	votes = models.PositiveIntegerField(default=0)
+	votes = models.IntegerField(default=0)
 
 	def get_children(self):
 		"""
