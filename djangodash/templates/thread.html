@@ -53,7 +53,24 @@ Thread page for: {{thread.content}}
 	        data     : data_to_send,
 	        success  : function(data){
 				var new_count = String(data.score);
-				$("#count_" + last_char).html(new_count)
+				$("#count_" + last_char).html(new_count);
+
+				color_up = parseInt(data.color_up);
+				color_down = parseInt(data.color_down);
+
+				if (color_up){
+					self.attr("src", "/media/up2.png")
+				}
+				else{
+					self.attr("src", "/media/up.png")
+				}
+
+				if (color_down){
+					$(".vote_down_" + last_char).attr("src", "/media/down2.png")
+				}
+				else{
+					$(".vote_down_" + last_char).attr("src", "/media/down.png")	
+				}
 	    	}
 		})
 	})
@@ -76,8 +93,29 @@ Thread page for: {{thread.content}}
 				var new_count = String(data.score);
 				$("#count_" + last_char).html(new_count)
 
+				color_up = parseInt(data.color_up);
+				color_down = parseInt(data.color_down);
+
+
+				if (color_down){
+					self.attr("src", "/media/down2.png")
+				}
+				else{
+					self.attr("src", "/media/down.png")
+				}
+
+
+				if (color_up){
+					$(".vote_up_" + last_char).attr("src", "/media/up2.png")
+				}
+				else{
+					$(".vote_up_" + last_char).attr("src", "/media/up.png")	
+				}
+
 	        }
 		})
+
+
 	})
 
 
