@@ -171,3 +171,6 @@ LOGGING = {
         },
     }
 }
+
+
+THREADS_PER_PAGE = 3

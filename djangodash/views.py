@@ -14,6 +14,7 @@ from django.db.models import Count
 from djangodash.forms import *
 from djangodash.models import *
 
+import settings
 import json
 
 def render(template, data, request):
@@ -48,12 +49,16 @@ def home(request):
         form = ThreadForm()
 
     # Get all threads
-    threads = Thread.objects.all().annotate(comment_count=Count('comment')).order_by("-date")
+    num_threads = settings.THREADS_PER_PAGE
+    threads = Thread.objects.all() \
+                            .annotate(comment_count=Count('comment')) \
+                            .order_by("-date")
 
     return render("home.html", 
 			{"user":user,
 			 "is_logged_in":user.is_authenticated(),
 			 "threads":threads,
+             "num_threads":num_threads,
 			 "form":form}, 
 			request)
 
