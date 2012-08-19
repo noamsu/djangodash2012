@@ -1,4 +1,4 @@
-
+{% load humanize %}
 <hr>
 <table style='border-spacing: 0px; 'border=0>
     <tr>
@@ -28,7 +28,7 @@
         <span class="comment-info">
             <a class="author-info" href="{% url user comment.author %}">{{comment.author.get_profile.display_name}}</a>    says:</span>
         <li><span id="comment-content" style='font-size:14px'>{{comment.content}}</span></li>
-        <span class="reply-link">reply</span>
+        <span class="reply-link">reply</span> | <small>{{comment.date|naturaltime}}</small>
         <form style='display:none;' id="{{comment.pk}}" action="/add_comment" method="POST">
         {% csrf_token %}
         <div><textarea name="content" rows="3" cols="50"></textarea></div>
