@@ -220,7 +220,6 @@ def vote(request):
 	# Up and we Up, after this we are neutral
 	if vote_type == Vote.VOTE_UP and action == "up":
 		# This means we want to take back the vote
-		print "vote up and try up"
 		comment.votes -= 1
 		comment.save()
 		# Back to neutral state, delete Vote object
@@ -231,7 +230,6 @@ def vote(request):
 
 	# Up and we Down, after this we are Down
 	if vote_type == Vote.VOTE_UP and action=="down":
-		print "VoteUP and try to down"
 		comment.votes -= 2
 		comment.save()
 		vote.vote_type = Vote.VOTE_DOWN
@@ -242,7 +240,6 @@ def vote(request):
 
 	# Down and we Down, after this we are neutral
 	if vote_type == Vote.VOTE_DOWN and action == "down":
-		print "VoteDOWN and try to down"
 		# Take back the down vote
 		comment.votes += 1
 		comment.save()
@@ -253,7 +250,6 @@ def vote(request):
 
 	# Down and we Up, after this we are Up
 	if vote_type == Vote.VOTE_DOWN and action == "up":
-		print "VoteDOWN and try to up"
 		comment.votes += 2
 		comment.save()
 		vote.vote_type = Vote.VOTE_UP
@@ -347,6 +343,5 @@ def logout(request):
 	"""
 	Log the user out.
 	"""
-	print  "made it here"
 	auth_logout(request)
 	return redirect(reverse("home"))
