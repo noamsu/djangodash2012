@@ -71,25 +71,28 @@ def thread(request, thread_id):
     
     structure = [t.get_tree(t) for t in top_comments]
 
-	# Get all the ids of the comments that the current user
-	# voted on. This is needed to highlight the arrows
-	# of those votes appropriately.
-    positive_ids = Vote.objects.filter(user=user,
-	 							   comment__thread=thread, 
-	 							   vote_type=Vote.VOTE_UP) \
-						   .values_list("comment_id", flat=True)
+    user_voting_data = {"positive":[], "negative":[]}
+    if user.is_authenticated():
+    	# Get all the ids of the comments that the current user
+    	# voted on. This is needed to highlight the arrows
+    	# of those votes appropriately.
+        positive_ids = Vote.objects.filter(user=user,
+    	 							   comment__thread=thread, 
+    	 							   vote_type=Vote.VOTE_UP) \
+    						   .values_list("comment_id", flat=True)
 
-    # Get ids of all negative votes
-    negative_ids = Vote.objects.filter(user=user,
-	 							   comment__thread=thread, 
-	 							   vote_type=Vote.VOTE_DOWN) \
-						   .values_list("comment_id", flat=True)
 
-    
-    user_voting_data = {
-    	"positive":positive_ids,
-    	"negative":negative_ids,
-    }
+        # Get ids of all negative votes
+        negative_ids = Vote.objects.filter(user=user,
+    	 							   comment__thread=thread, 
+    	 							   vote_type=Vote.VOTE_DOWN) \
+    						   .values_list("comment_id", flat=True)
+
+        
+        user_voting_data = {
+        	"positive":positive_ids,
+        	"negative":negative_ids,
+        }
 
     return render("thread.html",
 		{"thread":thread,
