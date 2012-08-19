@@ -31,6 +31,10 @@ urlpatterns = patterns('',
 	# Ajax urls
     url(r'^ajax/vote', 'djangodash.views.vote', name="vote"),
 
+    # Facebook connect
+    (r'^facebook_connect/', include('facebook_connect.urls')),
+
+
     # url(r'^djangodash/', include('djangodash.foo.urls')),
 
     # Uncomment the admin/doc line below to enable admin documentation:

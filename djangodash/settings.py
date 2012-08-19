@@ -140,7 +140,8 @@ INSTALLED_APPS = (
     # 'django.contrib.admindocs',
     'djangodash',
     'south',
-    'endless_pagination'
+    'endless_pagination',
+    'facebook_connect'
 )
 
 # A sample logging configuration. The only tangible logging
@@ -176,3 +177,10 @@ LOGGING = {
 THREADS_PER_PAGE = 6
 COMMENTS_PER_PROFILE_PAGE = 6
 LOGIN_URL = "/login"
+
+# Facebook settings
+
+FACEBOOK_LOGIN_REDIRECT = "/"                              # (optional, defaults to "/")
+FACEBOOK_APP_ID = "510960628929359"               # required
+FACEBOOK_APP_SECRET = "bd7493dc0e0763179fcbfebfb07a4cb9"  # required
+FACEBOOK_SCOPE = "email"                                   # (optional, defaults to "email")

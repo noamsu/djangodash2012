@@ -14,4 +14,14 @@
 	Incorrect Login. Please try again.
 {% endif %}
 
+Or, you can login with your facebook account:
+
+{% load facebook_connect %}
+
+<p>
+	{% facebook_button %}                
+</p>
+
+{% facebook_script %}
+
 {% endblock %}

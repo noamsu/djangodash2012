@@ -4,3 +4,4 @@ psycopg2==2.4.5
 wsgiref==0.1.2
 south==0.7.6
 django-endless-pagination==1.1
+django-facebook-connect==1.0.1
