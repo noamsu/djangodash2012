@@ -47,7 +47,7 @@ def home(request):
         form = ThreadForm()
 
     # Get all threads
-    threads = Thread.objects.all()
+    threads = Thread.objects.all().order_by("-date")
 
     return render("home.html", 
 			{"user":user,
