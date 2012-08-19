@@ -111,6 +111,12 @@ def create_profile(sender, **kwargs):
     Create a UserProfile when a User is created.
     """
     if kwargs['created']:
-        UserProfile(user=kwargs['instance']).save()
+        user = kwargs['instance']
 
-
+        # Create the profile 
+        profile = UserProfile(user=user)
+        profile.save()
+        
+        # Users will initially follow themselves
+        profile.following.add(user)
+        
