@@ -66,7 +66,6 @@ class Vote(models.Model):
 	vote_type = models.IntegerField(choices=VOTE_TYPES)
 
 
-
 class UserProfile(models.Model):
     """
     Store more information about the user.
@@ -75,6 +74,10 @@ class UserProfile(models.Model):
     user = models.OneToOneField(
         User
     )
+
+    following = models.ManyToManyField(User, 
+                                       symmetrical=False,
+                                       related_name="followers")
 
     def display_name(self):
     	if (self.user.first_name + self.user.last_name).strip():
