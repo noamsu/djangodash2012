@@ -120,6 +120,11 @@ TEMPLATE_DIRS = (
     # Don't forget to use absolute paths, not relative paths.
 )
 
+TEMPLATE_CONTEXT_PROCESSORS = (
+    'django.core.context_processors.request',
+    'django.contrib.auth.context_processors.auth'
+    )
+
 AUTH_PROFILE_MODULE = 'djangodash.UserProfile'
 
 INSTALLED_APPS = (
@@ -135,6 +140,7 @@ INSTALLED_APPS = (
     # 'django.contrib.admindocs',
     'djangodash',
     'south',
+    'endless_pagination'
 )
 
 # A sample logging configuration. The only tangible logging
