@@ -152,12 +152,15 @@ def vote(request):
 
 		# Return a success response
 		data = json.dumps({"error":False,
-						   "score":comment.votes})
+						   "score":comment.votes,
+						   "color_up":1 if action=="up" else 0,
+						   "color_down":0 if action=="up" else 1})
 		return HttpResponse(data)
 
 	# At this point, a vote exists
 	vote_type = vote.vote_type
 
+	# Up and we Up, after this we are neutral
 	if vote_type == Vote.VOTE_UP and action == "up":
 		# This means we want to take back the vote
 		print "vote up and try up"
@@ -165,35 +168,41 @@ def vote(request):
 		comment.save()
 		# Back to neutral state, delete Vote object
 		vote.delete()
-		data = json.dumps({"error":False, "score":comment.votes})
+		data = json.dumps({"error":False, "score":comment.votes,
+						   "color_up":0, "color_down":0})
 		return HttpResponse(data)
 
-
+	# Up and we Down, after this we are Down
 	if vote_type == Vote.VOTE_UP and action=="down":
 		print "VoteUP and try to down"
 		comment.votes -= 2
 		comment.save()
 		vote.vote_type = Vote.VOTE_DOWN
 		vote.save()
-		data = json.dumps({"error":False, "score":comment.votes})
+		data = json.dumps({"error":False, "score":comment.votes,
+						   "color_up":0, "color_down":1})
 		return HttpResponse(data)
 
+	# Down and we Down, after this we are neutral
 	if vote_type == Vote.VOTE_DOWN and action == "down":
 		print "VoteDOWN and try to down"
 		# Take back the down vote
 		comment.votes += 1
 		comment.save()
 		vote.delete()
-		data = json.dumps({"error":False, "score":comment.votes})
+		data = json.dumps({"error":False, "score":comment.votes,
+						   "color_up":0, "color_down":0})
 		return HttpResponse(data)
 
+	# Down and we Up, after this we are Up
 	if vote_type == Vote.VOTE_DOWN and action == "up":
 		print "VoteDOWN and try to up"
 		comment.votes += 2
 		comment.save()
 		vote.vote_type = Vote.VOTE_UP
 		vote.save()
-		data = json.dumps({"error":False, "score":comment.votes})
+		data = json.dumps({"error":False, "score":comment.votes,
+						   "color_up":1, "color_down":0})
 		return HttpResponse(data)
 
 
