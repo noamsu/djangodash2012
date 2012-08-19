@@ -310,35 +310,36 @@ def user_profile(request, username):
 		}, request)
 
 def login(request):
-	"""
-	Display the login page and log the user in.
-	"""
+    """
+    Display the login page and log the user in.
+    """
+    next = request.GET.get("next")
 
-	if request.method == "POST":
-		form = LoginForm(request.POST)
-		if form.is_valid():
-			username = form.cleaned_data["username"]
-			password = form.cleaned_data["password"]
+    if request.method == "POST":
+        form = LoginForm(request.POST)
+        if form.is_valid():
+            username = form.cleaned_data["username"]
+            password = form.cleaned_data["password"]
 
-			user = authenticate(username=username,
-				         password=password)
+            user = authenticate(username=username,
+                                password=password)
 
-			if user is not None:
+            if user is not None:
 				auth_login(request, user)
-				return redirect(reverse("home"))
+				return redirect(next)
 
-			# Incorrect username/password
-			return render("login.html", {"form":form,
+            # Incorrect username/password
+            return render("login.html", {"form":form,
 										 "login_error":True}, request)
 
-		# Invalid form
-		return render("login.html",{"form":form}, request)
+        # Invalid form
+        return render("login.html",{"form":form}, request)
 
-	else:
-		assert request.method == "GET"
-		form = LoginForm()
+    else:
+        assert request.method == "GET"
+        form = LoginForm()
 
-	return render("login.html",
+    return render("login.html",
 		{"form":form},
 		request)
 
