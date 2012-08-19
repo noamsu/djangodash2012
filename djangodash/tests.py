@@ -1,16 +1,26 @@
 from django.test import TestCase
 from djangodash.models import *
 
+from django.test.client import Client
+
 class TestBase(TestCase):
 	"""
 	Base class for tests.
 	"""
 	def setUp(self):
-		self.user = User(username="test", password="password")
+		self.user = User(username="test", password="!")
+		self.user.set_password("password")
+		self.user.save()
+
 		self.user.save()
 		self.thread = Thread(creator=self.user, 
 						     content="test_thread_content")
 		self.thread.save()
+
+		# Client configuration
+		self.client = Client()
+
+
 
 	def create_comment(self, comment=None):
 		"""
@@ -22,6 +32,7 @@ class TestBase(TestCase):
 				parent=comment, thread=self.thread)
 		new_comment.save()
 		return new_comment
+
 
 class TestCommentsTree(TestBase):
 	"""
@@ -75,6 +86,80 @@ class TestCommentsTree(TestBase):
 		assert s[1][0][1][0][0].id == 8
 		assert s[1][0][1][0][1][0][0].id == 9
 		assert s[1][0][1][1][0].id == 10
+
+class TestVotes(TestBase):
+	"""
+	Test comment voting.
+	"""
+
+	def setUp(self):
+		super(TestVotes, self).setUp()
+		self.vote_url = "/ajax/vote/"
+		self.client.login(username="test", password="password")
+
+	def testVoteUp(self):
+		comment = self.create_comment()
+		assert comment.votes == 0
+		
+		response = self.client.post(self.vote_url, {"comment_id":comment.id,
+													"action":"up"})
+
+		assert response.status_code == 200
+
+		comment = Comment.objects.get(id=comment.id)
+		assert comment.votes == 1
+
+	def testVoteUpTwice(self):
+		# Vote up once
+		comment = self.create_comment()
+		assert comment.votes == 0
+
+		response = self.client.post(self.vote_url, {"comment_id":comment.id,
+													"action":"up"})
+
+		comment = Comment.objects.get(id=comment.id)
+		assert comment.votes == 1
+
+		# Vote up again. This should take back the vote
+		# and comment.votes should == 0
+
+		response = self.client.post(self.vote_url, {"comment_id":comment.id,
+													"action":"up"})
+		comment= Comment.objects.get(id=comment.id)
+		assert comment.votes == 0
+
+	def testVoteDown(self):
+		comment = self.create_comment()
+		assert comment.votes == 0
+		
+		response = self.client.post(self.vote_url, {"comment_id":comment.id,
+													"action":"down"})
+
+		assert response.status_code == 200
+
+		comment = Comment.objects.get(id=comment.id)
+		assert comment.votes == -1
+
+	def testVoteUpTwice(self):
+		# Vote up once
+		comment = self.create_comment()
+		assert comment.votes == 0
+
+		response = self.client.post(self.vote_url, {"comment_id":comment.id,
+													"action":"down"})
+
+		comment = Comment.objects.get(id=comment.id)
+		assert comment.votes == -1
+
+		# Vote up again. This should take back the vote
+		# and comment.votes should == 0
+
+		response = self.client.post(self.vote_url, {"comment_id":comment.id,
+													"action":"down"})
+		comment= Comment.objects.get(id=comment.id)
+		assert comment.votes == 0
+
+
 
 
 

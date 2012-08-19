@@ -168,7 +168,7 @@ def vote(request):
 		data = json.dumps({"error":False, "score":comment.votes})
 		return HttpResponse(data)
 
-	
+
 
 
 
