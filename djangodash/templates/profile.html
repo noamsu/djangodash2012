@@ -1,9 +1,12 @@
 {% extends "base.html" %}
+{% load endless %}
 
 {% block main %}
 <h1>{{user.get_profile.display_name}}</h1>
 
 Recent comments:
+
+{% paginate num_comments comments %}
 
 {% for comment in comments %}
 <p>
@@ -18,10 +21,7 @@ Recent comments:
 </p>
 {% endfor %}
 
-
-
-
-
+{% show_pages %}
 
 {% endblock %}
 

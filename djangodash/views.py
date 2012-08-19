@@ -301,12 +301,13 @@ def user_profile(request, username):
     except User.DoesNotExist:
         raise Http404()
 
+    num_comments = settings.COMMENTS_PER_PROFILE_PAGE
     comments = Comment.objects.filter(author=profile_user)
-
 
     return render("profile.html", {
 		"user":user,
         "comments":comments,
+        "num_comments":num_comments
 		}, request)
 
 def login(request):
