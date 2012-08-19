@@ -338,9 +338,9 @@ def register(request):
 			if new_user.is_active:
 				username = form.cleaned_data["username"]
 				password = form.cleaned_data["password1"]
-				authenticate(username=username,
+				user = authenticate(username=username,
 						     password=password)
-				auth_login(request)
+				auth_login(request, user)
 				return redirect(reverse("home"))
 	else:
 		form = UserCreationForm()
