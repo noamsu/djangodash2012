@@ -73,7 +73,7 @@ def home(request):
 
         threads = Thread.objects.all() \
                         .filter(creator__pk__in=following_ids) \
-                        .annotate(comment_Count=Count('comment')) \
+                        .annotate(comment_count=Count('comment')) \
                         .order_by(sort_by)
 
     # Default to showing most recent results
