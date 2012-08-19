@@ -301,6 +301,15 @@ def user_profile(request, username):
     except User.DoesNotExist:
         raise Http404()
 
+    is_logged_in = user.is_authenticated()
+    if is_logged_in:
+        # Is the logged in user following the user whose
+        # profile we are looking at?
+
+        is_following = False
+        if user.get_profile().is_following(profile_user):
+            is_following = True
+
     num_comments = settings.COMMENTS_PER_PROFILE_PAGE
     comments = Comment.objects.filter(author=profile_user)
 
@@ -309,7 +318,8 @@ def user_profile(request, username):
         "profile_user":profile_user,
         "comments":comments,
         "num_comments":num_comments,
-        "is_logged_in":user.is_authenticated()
+        "is_logged_in":is_logged_in,
+        "is_following":is_following
 		}, request)
 
 @login_required
