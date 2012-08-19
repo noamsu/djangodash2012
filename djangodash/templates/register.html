@@ -3,9 +3,14 @@
 {% block title %} Register {% endblock %}
 
 {% block main %}
-<form action="" method="POST">
-	{% csrf_token %}
-	{{form.as_p}}
-	<input type="submit" value="Register"/>
-</form>
+
+{% if is_logged_in %}
+	You are already logged in.
+{% else %}
+	<form action="" method="POST">
+		{% csrf_token %}
+		{{form.as_p}}
+		<input type="submit" value="Register"/>
+	</form>
+{% endif %}
 {% endblock main %}

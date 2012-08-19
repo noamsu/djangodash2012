@@ -403,26 +403,29 @@ def login(request):
 
 
 def register(request):
-	"""
-	User registration.
-	"""
+    """
+    User registration.
+    """
+    user = request.user
 
-	if request.method == "POST":
-		form = UserCreationForm(request.POST)
-		if form.is_valid():
-			new_user = form.save()
-			# Login as the new user
-			if new_user.is_active:
-				username = form.cleaned_data["username"]
-				password = form.cleaned_data["password1"]
-				user = authenticate(username=username,
+    if request.method == "POST":
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            new_user = form.save()
+            # Login as the new user
+            if new_user.is_active:
+                username = form.cleaned_data["username"]
+                password = form.cleaned_data["password1"]
+                user = authenticate(username=username,
 						     password=password)
-				auth_login(request, user)
-				return redirect(reverse("home"))
-	else:
-		form = UserCreationForm()
-	return render("register.html",
-		{"form":form},
+                auth_login(request, user)
+                return redirect(reverse("home"))
+    else:
+        form = UserCreationForm()
+
+    return render("register.html",
+		{"form":form,
+         "is_logged_in":user.is_authenticated()},
 		request)
 
 def logout(request):
