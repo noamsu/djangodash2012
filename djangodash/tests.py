@@ -184,7 +184,20 @@ class TestThreads(TestBase):
 		assert threads[1].content == "new thread"
 		assert threads[1].creator == self.user
 
+	def testDeleteThread(self):
+		threads = Thread.objects.all()
+		assert len(threads) == 1
+		thread = threads[0]
 
+		# Delete the thread
+
+		delete_url = "/delete"
+		self.client.post(delete_url, {"type":"thread",
+								      "_id":thread.pk})
+
+		threads = Thread.objects.all()
+		assert len(threads) == 0
+		
 
 
 
