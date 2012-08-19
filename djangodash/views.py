@@ -155,6 +155,22 @@ def vote(request):
 						   "score":comment.votes})
 		return HttpResponse(data)
 
+	# At this point, a vote exists
+	vote_type = vote.vote_type
+
+	if vote_type == Vote.VOTE_UP and action == "up":
+		# This means we want to take back the vote
+		print "vote up and try up"
+		comment.votes -= 1
+		comment.save()
+		# Back to neutral state, delete Vote object
+		vote.delete()
+		data = json.dumps({"error":False, "score":comment.votes})
+		return HttpResponse(data)
+
+	
+
+
 
 	data = json.dumps({"error":False})
 	return HttpResponse(data)
