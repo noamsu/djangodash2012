@@ -147,7 +147,10 @@ textarea {
 		{% block main %}
 		{% endblock %}
 
-		<center><a href="{% url about %}">About Me</a></center>
+		<center>
+			<a href="{% url about %}">About Me</a>
+			| <a href="{% url home %}">Home</a> 
+		</center>
 	</div>
 </body>
 

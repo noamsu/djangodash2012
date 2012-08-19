@@ -76,6 +76,9 @@ def home(request):
                         .annotate(comment_Count=Count('comment')) \
                         .order_by(sort_by)
 
+    # Default to showing most recent results
+    if sort is None:
+        sort = "recent"
     return render("home.html", 
 			{"user":user,
 			 "is_logged_in":user.is_authenticated(),
