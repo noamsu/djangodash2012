@@ -13,6 +13,10 @@ class CommentAdmin(admin.ModelAdmin):
 class VoteAdmin(admin.ModelAdmin):
 	pass
 
+class UserProfileAdmin(admin.ModelAdmin):
+	pass
+
+admin.site.register(UserProfile, UserProfileAdmin)
 admin.site.register(Vote, VoteAdmin)
 admin.site.register(Comment, CommentAdmin)
 admin.site.register(Thread, ThreadAdmin)
