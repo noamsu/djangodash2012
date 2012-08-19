@@ -6,7 +6,7 @@ from django.template.loader import render_to_string
 register = template.Library()
 
 @register.filter(is_safe=True, needs_autoescape=True)
-def format_threaded_comments(value, autoescape=None):
+def format_threaded_comments(value, user_voting_data, autoescape=None):
     """
     Recursively takes a self-nested list and returns an HTML unordered list --
     WITHOUT opening and closing <ul> tags.
@@ -27,6 +27,7 @@ def format_threaded_comments(value, autoescape=None):
         </ul>
         </li>
     """
+
     if autoescape:
         escaper = conditional_escape
     else:
@@ -86,8 +87,12 @@ def format_threaded_comments(value, autoescape=None):
                 sublist = '\n%s<ul>\n%s\n%s</ul>\n%s' % (indent, sublist,
                                                          indent, indent)
             
+            # Get the ids of the comments that the user has voted on
+            positive_ids = user_voting_data["positive"]
+            negative_ids = user_voting_data["negative"]
+
             # Render comment.html for every comment.
-            comment_html = render_to_string("comment.html", {"comment":title, "rest_rendered_comments":sublist, "thread":title.thread})
+            comment_html = render_to_string("comment.html", {"comment":title, "rest_rendered_comments":sublist, "thread":title.thread, "positive_ids":positive_ids, "negative_ids":negative_ids})
             output.append(comment_html)
             i += 1
         return '\n'.join(output)

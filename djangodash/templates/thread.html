@@ -15,7 +15,7 @@ Thread page for: {{thread.content}}
 </form>
 
 {% for comment in structure %}
-	{{comment|format_threaded_comments}}
+	{{comment|format_threaded_comments:user_voting_data}}
 {% endfor %}
 
 <script type="text/javascript">

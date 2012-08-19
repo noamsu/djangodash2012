@@ -4,9 +4,21 @@
     <tr>
         <td>
         <div id="first_{{comment.pk}}" style='margin:0; padding:0px;line-height:0px; border-spacing:0px; border-collapse:collapse'>
-            <img class="vote_up_{{comment.pk}}" src="/media/up.png" />
+            <img class="vote_up_{{comment.pk}}" src=
+            {% if comment.pk in positive_ids %}
+            "/media/up2.png" 
+            {% else %}
+            "/media/up.png" 
+            {% endif %}
+            />
             <center id="count_{{comment.pk}}">{{comment.votes}}</center>
-            <img class="vote_down_{{comment.pk}}" src="/media/down.png" />
+            <img class="vote_down_{{comment.pk}}" src=
+            {% if comment.pk in negative_ids %}
+            "/media/down2.png" 
+            {% else %}
+            "/media/down.png" 
+            {% endif %}
+            />
         </div>
     </td>
     <td width="5%">
