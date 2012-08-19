@@ -314,3 +314,13 @@ class TestFollowing(TestBase):
         assert user_three.get_profile().is_following(user_four) == True
         assert user_two.get_profile().is_following(user_three) == True
         assert user_three.get_profile().is_following(user_two) == True
+
+
+    def testFollowUserThatDoesNotExist(self):
+        bad_id = 0
+        response = self.client.post(self.url, {"profile_user_id":bad_id,
+                                               "action":"follow"})
+
+
+
+        assert response.status_code == 302
