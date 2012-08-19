@@ -18,6 +18,9 @@ urlpatterns = patterns('',
     # Thread page
 	url(r'^thread/(?P<thread_id>.*)$', 'djangodash.views.thread', name='thread'),
 
+	# Sort threads (form the home page)
+	# url(r'^sort_threads$', 'djangodash.views.sort_threads', name='sort_threads'),
+
 	# Delete
 	url(r'^delete$', 'djangodash.views.delete', name='delete'),
 

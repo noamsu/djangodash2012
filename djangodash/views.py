@@ -28,6 +28,7 @@ def home(request):
     Home page.
     """
     user = request.user
+    sort = request.GET.get("sort_options").strip()
 
     if request.method == "POST":
         if not user.is_authenticated():
@@ -50,16 +51,27 @@ def home(request):
 
     # Get all threads
     num_threads = settings.THREADS_PER_PAGE
+
+    print sort
+    if sort == "numcomments":
+        sort_by = "-comment_count"
+    elif sort == "recent":
+        sort_by = "-date"
+    else:
+        sort_by = "-date"
+
+    print sort_by
     threads = Thread.objects.all() \
                             .annotate(comment_count=Count('comment')) \
-                            .order_by("-date")
+                            .order_by(sort_by)
 
     return render("home.html", 
 			{"user":user,
 			 "is_logged_in":user.is_authenticated(),
 			 "threads":threads,
              "num_threads":num_threads,
-			 "form":form}, 
+			 "form":form,
+             "selected":sort}, 
 			request)
 
 def thread(request, thread_id):
@@ -111,6 +123,31 @@ def thread(request, thread_id):
 		 "is_logged_in":user.is_authenticated(),
 		 "user":user},
 		request)
+
+
+# # require post
+# def sort_threads(request):
+#     """
+#     Sort the threads on the home page.
+#     The three options are: 'recent', 'personal', and 'numcomments'.
+#     """
+
+#     user = request.user
+#     sort = request.POST.get("sort_options")
+
+#     # Get sorted threads
+#     num_threads = settings.THREADS_PER_PAGE
+#     threads = None
+
+#     return render("home.html", 
+#             {"user":user,
+#              "is_logged_in":user.is_authenticated(),
+#              "threads":threads,
+#              "num_threads":num_threads,
+#              "form":form}, 
+#             request)
+
+
 
 # make this require a POST request
 @login_required
