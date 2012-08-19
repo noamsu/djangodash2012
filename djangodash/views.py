@@ -362,7 +362,7 @@ def follow(request):
         if profile.is_following(profile_user):
             profile.remove_follower(profile_user)
 
-    return redirect(reverse("user", kwargs={"username":user.username}))
+    return redirect(reverse("user", kwargs={"username":profile_user.username}))
 
 def login(request):
     """

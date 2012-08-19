@@ -2,7 +2,7 @@
 {% load endless %}
 
 {% block main %}
-<h1>{{user.get_profile.display_name}}</h1>
+<h1>{{profile_user.get_profile.display_name}}</h1>
 
 {% if is_logged_in %}
 	{% if is_following %}
