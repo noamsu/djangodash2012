@@ -314,6 +314,9 @@ def login(request):
     Display the login page and log the user in.
     """
     next = request.GET.get("next")
+    # Make absolute url
+    if next is not None and not next.startswith("/"):
+        next = "/" + next
 
     if request.method == "POST":
         form = LoginForm(request.POST)
@@ -325,8 +328,11 @@ def login(request):
                                 password=password)
 
             if user is not None:
-				auth_login(request, user)
-				return redirect(next)
+                auth_login(request, user)
+                if next is not None:
+                    return redirect(next)
+                else:
+                    return redirect(reverse("home"))
 
             # Incorrect username/password
             return render("login.html", {"form":form,
