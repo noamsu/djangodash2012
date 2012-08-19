@@ -12,7 +12,7 @@
 
 {% for thread in threads %}
 	posted by
-	<a class="author-info" href="{% url user thread.creaor %}">{{thread.creator}}</a>
+	<a class="author-info" href="{% url user thread.creator %}">{{thread.creator}}</a>
 	<br />
 	<blockquote>
 	 <a class="thread" href="{% url thread thread.id %}">{{thread.content}}</a>
