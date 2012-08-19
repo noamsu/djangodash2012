@@ -22,31 +22,32 @@ def render(template, data, request):
 	return render_to_response(request, template, data)
 
 def home(request):
-	"""
-	Home page.
-	"""
-	user = request.user
+    """
+    Home page.
+    """
+    user = request.user
 
-	if request.method == "POST":
-		if not user.is_authenticated():
-			return redirect(reverse("home"))
+    if request.method == "POST":
+        if not user.is_authenticated():
+            return redirect(reverse("home"))
 
-		form = ThreadForm(request.POST)
-		if form.is_valid():
-			# Create a new thread
-			thread_content = form.cleaned_data["content"]
+        form = ThreadForm(request.POST)
+        if form.is_valid():
+            # Create a new thread
+            thread_content = form.cleaned_data["content"]
 
-			new_thread = Thread(content=thread_content,
+            new_thread = Thread(content=thread_content,
 							    creator=user)
 
-			new_thread.save()
-	else:
-		form = ThreadForm()
+            new_thread.save()
 
-	# Get all threads
-	threads = Thread.objects.all() 
+    else:
+        form = ThreadForm()
 
-	return render("home.html", 
+    # Get all threads
+    threads = Thread.objects.all() 
+
+    return render("home.html", 
 			{"user":user,
 			 "is_logged_in":user.is_authenticated(),
 			 "threads":threads,

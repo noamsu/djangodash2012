@@ -2,6 +2,7 @@ from django.test import TestCase
 from djangodash.models import *
 
 from django.test.client import Client
+from django.core.urlresolvers import reverse
 
 class TestBase(TestCase):
 	"""
@@ -158,7 +159,33 @@ class TestVotes(TestBase):
 		assert comment.votes == 0
 
 
-	# Vote up and then down
-	# Vote down and then up
+class TestThreads(TestBase):
+	"""
+	Test class for testing threads.
+	"""
+	def setUp(self):
+		super(TestThreads, self).setUp()
+		self.url = "/"
+		self.client.login(username="test", password="password")
+
+	def testCreateNewThread(self):
+		threads = Thread.objects.all()
+		assert len(threads) == 1
+		assert threads[0].content == "test_thread_content"
+
+		# Create a new thread 
+
+		response = self.client.post(self.url, {"content":"new thread"})
+
+		assert response.status_code == 200
+
+		threads = Thread.objects.all()
+		assert len(threads) == 2
+		assert threads[1].content == "new thread"
+		assert threads[1].creator == self.user
+
+	
+
+
 
 
