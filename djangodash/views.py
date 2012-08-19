@@ -28,7 +28,8 @@ def home(request):
     Home page.
     """
     user = request.user
-    sort = request.GET.get("sort_options").strip()
+    sort = request.GET.get("sort_options")
+    if sort: sort = sort.strip()
 
     if request.method == "POST":
         if not user.is_authenticated():

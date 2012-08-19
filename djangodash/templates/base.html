@@ -5,11 +5,17 @@
 	{% endblock title %}
 </title>
 
+<link href='http://fonts.googleapis.com/css?family=Shadows+Into+Light+Two' rel='stylesheet' type='text/css'>
+
 <style>
 
 body {
 	font:13px/1.231 arial,helvetica,clean,sans-serif;
 }
+
+.logo-text{
+font-family: 'Shadows Into Light Two', cursive;
+      }
 
 #wrapper{
 	margin:0 auto 0;
@@ -70,9 +76,12 @@ textarea {
 	padding: 2px;
 
 }  
+
+
 </style>
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+
+
 
 <head>
 	{% block head %}
@@ -81,6 +90,11 @@ textarea {
 
 <body>
 	<div id="wrapper">
+		<table><tr><td>
+		<img src="/media/icon.png" />
+	</td><td>
+		<h1> <span class="logo-text">COMMINATOR</span> </h1>
+	</tr></td></table>
 	<div align="right">
 		{% if is_logged_in %}
 			Logged in as <a href="{% url user user %}">{{user}}</a> | 
