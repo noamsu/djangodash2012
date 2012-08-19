@@ -319,11 +319,11 @@ def user_profile(request, username):
         raise Http404()
 
     is_logged_in = user.is_authenticated()
+    is_following = False
     if is_logged_in:
         # Is the logged in user following the user whose
         # profile we are looking at?
 
-        is_following = False
         if user.get_profile().is_following(profile_user):
             is_following = True
 
@@ -336,7 +336,8 @@ def user_profile(request, username):
         "comments":comments,
         "num_comments":num_comments,
         "is_logged_in":is_logged_in,
-        "is_following":is_following
+        "is_following":is_following,
+        "my_profile":user==profile_user,
 		}, request)
 
 @login_required

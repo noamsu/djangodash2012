@@ -4,28 +4,32 @@
 {% block main %}
 <h1>{{profile_user.get_profile.display_name}}</h1>
 
-{% if is_logged_in %}
-	{% if is_following %}
-		<p><b>You are currently following {{profile_user.get_profile.display_name}}</b>
+{% if not my_profile %}
+	{% if is_logged_in %}
+		{% if is_following %}
+			<p><b>You are currently following {{profile_user.get_profile.display_name}}</b>
 
-		<form action="/follow" method="POST"/>
-			{% csrf_token %}
-			<input type="hidden" name="profile_user_id" value="{{profile_user.pk}}" />
-			<input type="hidden" name="action" value="unfollow" />
-			<input class="input-button" type="submit" value="- Unfollow" />
-		</form>
+			<form action="/follow" method="POST"/>
+				{% csrf_token %}
+				<input type="hidden" name="profile_user_id" value="{{profile_user.pk}}" />
+				<input type="hidden" name="action" value="unfollow" />
+				<input class="input-button" type="submit" value="- Unfollow" />
+			</form>
 
-		</p>
+			</p>
+		{% else %}
+			<form action="/follow" method="POST"/>
+				{% csrf_token %}
+				<input type="hidden" name="profile_user_id" value="{{profile_user.pk}}" />
+				<input type="hidden" name="action" value="follow" />
+				<input class="input-button" type="submit" value="+ Follow" />
+			</form>
+		{% endif %}
 	{% else %}
-		<form action="/follow" method="POST"/>
-			{% csrf_token %}
-			<input type="hidden" name="profile_user_id" value="{{profile_user.pk}}" />
-			<input type="hidden" name="action" value="follow" />
-			<input class="input-button" type="submit" value="+ Follow" />
-		</form>
+		<p>You need to log in to follow this user</p>
 	{% endif %}
 {% else %}
-	You need to log in to follow this user
+	<p>This is your pofile! Visit the profile of another user to follow them.</p>
 {% endif %}
 
 
@@ -44,6 +48,9 @@ Recent comments:
 	</a>
 	</small>
 </p>
+{% empty %}
+
+<p>You didn't write any comments --- you should, it's fun!</p>
 {% endfor %}
 
 {% show_pages %}
