@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% load endless %}
+{% load humanize %}
 
 {% block title %} Home | Comminator {% endblock %}
 
@@ -43,7 +44,7 @@
 	<blockquote>
 	 <a class="thread" href="{% url thread thread.id %}">{{thread.content}}</a>
 	 <br />
-	 <small>{{thread.comment_count}} comments</small>
+	 <small>{{thread.comment_count}} comments | {{thread.date|naturaltime}} </small>
 	 {% if thread.creator == user %}
 	 	<form action="/delete" method="POST">
 		<input type="hidden" name="_id" value="{{thread.pk}}" />
