@@ -33,6 +33,12 @@ posted by <span id="author-info">
 	}
 
 	$(".reply-link").click(function(){
+		var logged_in = "{{is_logged_in}}";
+		if (logged_in === "False"){
+			alert("Please log in to reply")
+			return;
+		}
+
 		// Side down the comment form when the
 		// reply button is pressed.
 

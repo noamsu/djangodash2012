@@ -79,11 +79,17 @@ class UserProfile(models.Model):
                                        symmetrical=False,
                                        related_name="followers")
 
-   	
+
     def add_follower(self, user):
+    	"""
+    	Add a follower.
+    	"""
         self.following.add(user)
 
     def remove_follower(self, user):
+    	"""
+    	Remove a follower.
+    	"""
         self.following.remove(user)
 
     def display_name(self):

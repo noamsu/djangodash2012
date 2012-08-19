@@ -174,3 +174,4 @@ LOGGING = {
 
 
 THREADS_PER_PAGE = 6
+LOGIN_URL = "/login"
