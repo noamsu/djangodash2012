@@ -10,8 +10,7 @@
 	Share something interesting <br /> 
  	<textarea id="id_content" rows="3" cols="50" name="content"
  	{% if not is_logged_in %} disabled="disabled" {% endif %}
- 	>{% if not is_logged_in %}Please log in to create a thread {% endif %}
- 	</textarea>
+ 	>{% if not is_logged_in %}Please log in to create a thread{% endif %}</textarea>
 	 <br />
 	<input class="input-button" type="submit" value="submit" />
 </form>
