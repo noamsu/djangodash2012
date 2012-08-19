@@ -324,3 +324,22 @@ class TestFollowing(TestBase):
 
 
         assert response.status_code == 302
+
+
+    def testUnfollowUser(self):
+        user_one = self.user
+        user_two = self.create_new_user("2","2")
+        assert user_one != user_two
+
+        user_two_id = user_two.id
+        self.client.post(self.url,
+                            {"profile_user_id":user_two_id,
+                             "action":"follow"})
+
+        assert user_one.get_profile().is_following(user_two)
+
+        self.client.post(self.url,
+                            {"profile_user_id":user_two_id,
+                             "action":"unfollow"})
+
+        assert user_one.get_profile().is_following(user_two) == False
