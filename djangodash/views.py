@@ -8,6 +8,7 @@ from django.contrib.auth.models import User
 from django.http import HttpResponse, Http404
 from django.contrib.auth.forms import UserCreationForm
 from django.views.decorators.csrf import csrf_exempt
+from django.contrib.auth.decorators import login_required
 
 from djangodash.forms import *
 from djangodash.models import *
@@ -103,7 +104,7 @@ def thread(request, thread_id):
 		request)
 
 # make this require a POST request
-# make login required
+@login_required
 @csrf_exempt
 def add_comment(request):
 	"""
@@ -132,8 +133,9 @@ def add_comment(request):
 	# Redirect back to the thread 
 	return redirect(reverse("thread", kwargs={"thread_id": int(thread_id)}))
 
-# login required
+
 # post required
+@login_required
 @csrf_exempt
 def vote(request):
 	"""
@@ -236,13 +238,23 @@ def vote(request):
 	return HttpResponse(data)
 
 def user_profile(request, username):
-	"""
-	Show the profile page for a user.
-	"""
-	user = request.user
+    """
+    Show the profile page for a user.
+    """
+    user = request.user
 
-	return render("profile.html", {
-		"user":user
+    # Get the user whose profile we are looking at
+    try:
+        profile_user = User.objects.get(username=username)
+    except User.DoesNotExist:
+        raise Http404()
+
+    comments = Comment.objects.filter(author=profile_user)
+
+
+    return render("profile.html", {
+		"user":user,
+        "comments":comments,
 		}, request)
 
 def login(request):

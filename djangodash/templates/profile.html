@@ -1,2 +1,34 @@
+{% extends "base.html" %}
 
-Profile page for <b>{{user}}</b>
+{% block main %}
+<h1>{{user}}</h1>
+
+Recent comments:
+
+{% for comment in comments %}
+<p>
+	<hr>
+
+	<div>{{comment.content}}</div>
+	<small>
+	<a href="{% url thread comment.thread.id %}#first_{{comment.pk}}">
+		View in thread
+	</a>
+	</small>
+</p>
+{% endfor %}
+
+
+
+
+
+
+{% endblock %}
+
+
+
+
+
+
+
+

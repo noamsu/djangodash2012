@@ -27,7 +27,7 @@ ul, li {
 <body>
 	<div align="right">
 		{% if is_logged_in %}
-			Logged in as {{user}}
+			Logged in as <a href="{% url user user %}">{{user}}</a> | 
 			<a href="{% url logout %}">Logout</a>
 		{% else  %}
 			<a href="{% url login %}">Login</a> | 
