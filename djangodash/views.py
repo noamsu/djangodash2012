@@ -53,10 +53,9 @@ def home(request):
     # Get all threads
     num_threads = settings.THREADS_PER_PAGE
 
+    sort_by = "-date"
     if sort == "numcomments":
         sort_by = "-comment_count"
-    elif sort == "recent":
-        sort_by = "-date"
 
     if sort != "personal":
 
