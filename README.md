@@ -36,7 +36,7 @@ Visit
 ==============
 
 
-Visit the site at djangodash2012.herokuapp.com
+Visit the site at http://djangodash2012.herokuapp.com/
 
 
 Run locally
