@@ -269,5 +269,48 @@ class TestFollowing(TestBase):
 
         assert user_one.get_profile().is_following(user_two) == True
 
+    def testFollowSeveralUsers(self):
+        user_one = self.create_new_user("1","1")
+        user_two = self.create_new_user("2","2")
+        user_three = self.create_new_user("3","3")
+        user_four = self.create_new_user("4","4")
 
+        # User one should follow user three
+        # User three should follow user four
+        # User two should follow user three
+        # User three should follow user two
 
+        assert user_one != user_two != user_three != user_four
+
+        assert user_one.get_profile().is_following(user_two) == False
+        assert user_three.get_profile().is_following(user_four) == False
+        assert user_two.get_profile().is_following(user_three) == False
+        assert user_three.get_profile().is_following(user_two) == False
+
+        self.client.login(username="1", password="1")
+        self.client.post(self.url,
+                        {"profile_user_id":user_three.id,
+                         "action":"follow"})
+
+        # Login as user one
+        self.client.login(username="3", password="3")
+        self.client.post(self.url,
+                        {"profile_user_id":user_four.id,
+                         "action":"follow"})
+
+        # Login as user two
+        self.client.login(username="2", password="2")
+        self.client.post(self.url,
+                        {"profile_user_id":user_three.id,
+                         "action":"follow"})
+
+        # Login as user three
+        self.client.login(username="3", password="3")
+        self.client.post(self.url,
+                        {"profile_user_id":user_two.id,
+                         "action":"follow"})
+
+        assert user_one.get_profile().is_following(user_three) == True
+        assert user_three.get_profile().is_following(user_four) == True
+        assert user_two.get_profile().is_following(user_three) == True
+        assert user_three.get_profile().is_following(user_two) == True
