@@ -184,8 +184,6 @@ class TestThreads(TestBase):
 		assert threads[1].content == "new thread"
 		assert threads[1].creator == self.user
 
-	
-
 
 
 

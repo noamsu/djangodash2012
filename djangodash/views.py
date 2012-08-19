@@ -40,7 +40,7 @@ def home(request):
 							    creator=user)
 
             new_thread.save()
-            
+
         return redirect(reverse("home"))
 
     else:
@@ -137,6 +137,31 @@ def add_comment(request):
 	return redirect(reverse("thread", kwargs={"thread_id": int(thread_id)}) +
                     "#first_%s" % comment.id)
 
+@login_required
+@csrf_exempt
+# require post
+def delete(request):
+    """
+    Delete a comment or a thread, based on the request.
+    """
+
+    obj_type = request.POST.get("type")
+    obj_id = request.POST.get("_id")
+
+    if obj_type == "thread":
+        try:
+            thread = Thread.objects.get(id=int(obj_id))
+        except Thread.DoesNotExist:
+            return redirect(reverse("home"))
+
+        thread.delete()
+
+        # Create redirect url
+        scroll_id = int(obj_id) - 1
+        append_to_url = "#" + str(scroll_id) if scroll_id > 0 else ""
+        return redirect(reverse("home") + append_to_url)
+
+    return redirect(reverse("home"))
 
 # post required
 @login_required

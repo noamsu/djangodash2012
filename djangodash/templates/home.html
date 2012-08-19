@@ -15,7 +15,12 @@
 	<a class="author-info" href="{% url user thread.creator %}">{{thread.creator}}</a>
 
 	{% if thread.creator == user %}
-	| delete
+	| 
+	<form action="/delete" method="POST">
+		<input type="hidden" name="_id" value="{{thread.pk}}" />
+		<input type="hidden" name="type" value="thread" />
+		<input type="submit" value="delete" />
+	</form>
 	{% endif %}
 	<br />
 	<blockquote>

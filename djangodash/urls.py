@@ -18,6 +18,9 @@ urlpatterns = patterns('',
     # Thread page
 	url(r'^thread/(?P<thread_id>.*)$', 'djangodash.views.thread', name='thread'),
 
+	# Delete
+	url(r'^delete$', 'djangodash.views.delete', name='delete'),
+
     # Profile page
 	url(r'^user/(?P<username>.*)$', 'djangodash.views.user_profile', name='user'),
 
