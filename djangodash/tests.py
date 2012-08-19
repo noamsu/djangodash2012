@@ -240,6 +240,9 @@ class TestThreads(TestBase):
 		threads = Thread.objects.all()
 		assert len(threads) == 1
 
+class TestFollowing(TestBase):
+	def testFollowUser(self):
+		pass
 
 
 
